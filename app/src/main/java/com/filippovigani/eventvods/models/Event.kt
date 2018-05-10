@@ -1,8 +1,9 @@
 package com.filippovigani.eventvods.models
 
+import com.google.gson.annotations.SerializedName
 import java.util.*
 
-data class Event(val id: String?) {
+data class Event(@SerializedName("_id") val id: String?) {
 	val name: String = ""
 	//val game: Game
 	val slug: String = ""
