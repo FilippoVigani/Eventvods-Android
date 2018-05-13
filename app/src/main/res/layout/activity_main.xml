@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto">
-	<data>
-		<variable name="event" type="com.filippovigani.eventvods.models.Event" />
-	</data>
 	<android.support.design.widget.CoordinatorLayout
 		xmlns:tools="http://schemas.android.com/tools"
 		android:layout_width="match_parent"
@@ -38,11 +35,24 @@
 		</android.support.design.widget.AppBarLayout>
 
 		<!--<include layout="@layout/content_main" />-->
-		<TextView android:layout_height="wrap_content"
-			android:layout_width="wrap_content"
-			android:text="@{event.name}">
 
-		</TextView>
+		<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+			xmlns:app="http://schemas.android.com/apk/res-auto"
+			xmlns:tools="http://schemas.android.com/tools"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			app:layout_behavior="@string/appbar_scrolling_view_behavior"
+			tools:context=".MainActivity"
+			tools:showIn="@layout/activity_main">
+
+			<fragment
+				android:id="@+id/event_fragment"
+				android:name="com.filippovigani.eventvods.EventFragment"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent">
+
+			</fragment>
+		</android.support.v4.widget.NestedScrollView>
 
 		<android.support.design.widget.FloatingActionButton
 			android:id="@+id/fab"

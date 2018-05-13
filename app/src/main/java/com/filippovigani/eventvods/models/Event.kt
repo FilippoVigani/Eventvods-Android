@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import java.util.*
 
 data class Event(@SerializedName("_id") val id: String?) {
-	val name: String = ""
+	val name: String = "Event"
 	//val game: Game
 	val slug: String = ""
 	val subtitle: String? = ""

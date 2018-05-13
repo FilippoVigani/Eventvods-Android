@@ -20,8 +20,9 @@ class MainActivity : AppCompatActivity() {
 
 		EventvodsApi.getEvents()
 
-		val binding : ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-		binding.event = Event("Test event")
+		/*val binding : ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+		binding.event = Event("Test event")*/
+		setContentView(R.layout.activity_main)
 
 		setSupportActionBar(toolbar)
 		fab.setOnClickListener { view ->
