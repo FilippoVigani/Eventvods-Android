@@ -3,18 +3,17 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	tools:context=".EventFragment">
 	<data>
-		<variable name="event" type="com.filippovigani.eventvods.models.Event" />
+		<variable name="viewModel" type="com.filippovigani.eventvods.viewmodels.EventViewModel" />
 	</data>
 	<FrameLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		>
 
-		<!-- TODO: Update blank fragment layout -->
 		<TextView
 			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:text="@{event.name}" />
+			android:layout_height="wrap_content"
+			android:text="@{viewModel.event.id}" />
 
 	</FrameLayout>
 </layout>

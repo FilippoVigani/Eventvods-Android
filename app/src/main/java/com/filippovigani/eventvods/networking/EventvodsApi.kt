@@ -11,11 +11,11 @@ class EventvodsApi {
 		inline fun <reified T> Gson.fromJson(json: String) = this.fromJson<T>(json, object: TypeToken<T>() {}.type)
 		val gson = Gson()
 
-		fun getEvents(){
+		fun getEvents(callback: (List<Event>) -> Unit){
 			HttpsRequestTask({response -> run {
 			}
 				val events = gson.fromJson<List<Event>>(response)
-				Log.d("TAG", events.toString())
+				callback(events)
 			}).execute(Endpoint.EVENTS.url)
 		}
 	}

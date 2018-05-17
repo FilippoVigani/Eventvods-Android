@@ -45,8 +45,8 @@ class EventFragment : Fragment() {
 		// Inflate the layout for this fragment
 
 		val binding: FragmentEventBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_event, container, false)
-		binding.event = Event("testevent")
-		binding.executePendingBindings()
+		//binding.viewModel = Event("testevent")
+		//binding.executePendingBindings()
 
 		return binding.root
 	}
