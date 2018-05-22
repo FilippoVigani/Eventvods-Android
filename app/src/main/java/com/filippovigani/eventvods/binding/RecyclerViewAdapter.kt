@@ -1,4 +1,4 @@
-package com.filippovigani.eventvods.views
+package com.filippovigani.eventvods.binding
 
 import android.databinding.DataBindingUtil
 import android.databinding.ObservableArrayList
@@ -6,11 +6,10 @@ import android.databinding.ViewDataBinding
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.android.databinding.library.baseAdapters.BR
 import android.databinding.ObservableList
 import java.lang.ref.WeakReference
 
-abstract class RecyclerBaseAdapter<T>(items: Collection<T>? = null) : RecyclerView.Adapter<RecyclerViewHolder>() {
+abstract class RecyclerViewAdapter<T>(items: Collection<T>? = null) : RecyclerView.Adapter<RecyclerViewViewHolder>() {
 
 	private val onListChangedCallback: WeakReferenceOnListChangedCallback<T>?
 
@@ -43,16 +42,10 @@ abstract class RecyclerBaseAdapter<T>(items: Collection<T>? = null) : RecyclerVi
 	}
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-			RecyclerViewHolder(DataBindingUtil.inflate<ViewDataBinding>(LayoutInflater.from(parent.context), viewType, parent, false))
+			RecyclerViewViewHolder(DataBindingUtil.inflate<ViewDataBinding>(LayoutInflater.from(parent.context), viewType, parent, false))
 
-	override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
-		getViewModel(position)
-			?.let {
-				val bindingSuccess = holder.bind(it)
-				if (!bindingSuccess) {
-					throw IllegalStateException("Binding ${holder.binding} viewModel variable name should be 'viewModel'")
-				}
-			}
+	override fun onBindViewHolder(holder: RecyclerViewViewHolder, position: Int) {
+		getViewModel(position)?.let {holder.bind(it)}
 	}
 
 	override fun getItemViewType(position: Int) = getLayoutIdForPosition(position)
@@ -61,9 +54,9 @@ abstract class RecyclerBaseAdapter<T>(items: Collection<T>? = null) : RecyclerVi
 
 	abstract fun getViewModel(position: Int): Any?
 
-	private class WeakReferenceOnListChangedCallback<T>(bindingRecyclerViewAdapter: RecyclerBaseAdapter<T>) : ObservableList.OnListChangedCallback<ObservableList<T>>() {
+	private class WeakReferenceOnListChangedCallback<T>(bindingRecyclerViewAdapter: RecyclerViewAdapter<T>) : ObservableList.OnListChangedCallback<ObservableList<T>>() {
 
-		private val adapterReference: WeakReference<RecyclerBaseAdapter<T>> = WeakReference(bindingRecyclerViewAdapter)
+		private val adapterReference: WeakReference<RecyclerViewAdapter<T>> = WeakReference(bindingRecyclerViewAdapter)
 
 		override fun onChanged(sender: ObservableList<T>) {
 			adapterReference.get()?.run { this.notifyDataSetChanged() }
