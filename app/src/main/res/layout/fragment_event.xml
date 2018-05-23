@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:card_view="http://schemas.android.com/apk/res-auto"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	tools:context=".EventFragment">
 	<data>
@@ -22,33 +22,54 @@
 			android:layout_height="wrap_content"
 			android:orientation="vertical">
 
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal"
+				android:gravity="center_vertical"
+				android:padding="@dimen/text_margin">
+				<ImageView
+					android:id="@+id/game_icon_image"
+					android:layout_width="48dp"
+					android:layout_height="48dp"
+					android:scaleType="fitCenter"
+					android:layout_marginEnd="@dimen/text_margin"
+					app:gameSlug="@{viewModel.event.game.slug}"
+					android:contentDescription="@{viewModel.event.game.slug}">
+
+				</ImageView>
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="vertical"
+					>
+
+					<TextView
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginBottom="8dp"
+						android:text="@{viewModel.event.name}"
+						android:textColor="#000"
+						android:textSize="18sp" />
+
+					<TextView
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:text="@{viewModel.event.subtitle}"
+						android:textColor="#555" />
+				</LinearLayout>
+
+			</LinearLayout>
+
 			<ImageView
 				android:id="@+id/event_image"
 				android:layout_width="match_parent"
 				android:layout_height="160dp"
 				android:scaleType="fitCenter"
+				android:background="@color/cardview_dark_background"
+				android:padding="16dp"
+				android:contentDescription="@{viewModel.event.name}"
 				/>
-
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:orientation="vertical"
-				android:padding="@dimen/text_margin">
-
-				<TextView
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginBottom="8dp"
-					android:text="@{viewModel.event.name}"
-					android:textColor="#000"
-					android:textSize="18sp" />
-
-				<TextView
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:text="@{viewModel.event.subtitle}"
-					android:textColor="#555" />
-			</LinearLayout>
 
 			<LinearLayout
 				android:layout_width="match_parent"

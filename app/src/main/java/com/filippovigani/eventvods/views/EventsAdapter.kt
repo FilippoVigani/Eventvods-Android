@@ -27,7 +27,7 @@ class EventsAdapter(items: Collection<Event>? = null) : RecyclerViewAdapter<Even
 
 	override fun getLayoutIdForPosition(position: Int) = R.layout.fragment_event
 
-	override fun getViewModel(position: Int) = EventViewModel(items?.get(position) ?: Event("Empty event"))
+	override fun getViewModel(position: Int) = EventViewModel(items?.get(position) ?: Event(null))
 
 	override fun getItemCount() = items?.size ?: 0
 
