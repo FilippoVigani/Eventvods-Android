@@ -1,5 +1,6 @@
 package com.filippovigani.eventvods.binding
 
+import android.app.Activity
 import android.databinding.DataBindingUtil
 import android.databinding.ObservableArrayList
 import android.databinding.ViewDataBinding
@@ -13,10 +14,10 @@ abstract class RecyclerViewAdapter<T>(items: Collection<T>? = null) : RecyclerVi
 
 	private val onListChangedCallback: WeakReferenceOnListChangedCallback<T>?
 
-	protected var items: ObservableList<T>? = null
+	var items: ObservableList<T>? = null
 		set(value){
 			if (field == value) return
-
+			/* TODO: Manage with [DiffUtil] instead */
 			field?.let {
 				notifyItemRangeRemoved(0, it.size)
 				it.removeOnListChangedCallback(this.onListChangedCallback)
@@ -42,7 +43,7 @@ abstract class RecyclerViewAdapter<T>(items: Collection<T>? = null) : RecyclerVi
 	}
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-			RecyclerViewViewHolder(DataBindingUtil.inflate<ViewDataBinding>(LayoutInflater.from(parent.context), viewType, parent, false))
+		RecyclerViewViewHolder(DataBindingUtil.inflate<ViewDataBinding>(LayoutInflater.from(parent.context), viewType, parent, false))
 
 	override fun onBindViewHolder(holder: RecyclerViewViewHolder, position: Int) {
 		getViewModel(position)?.let {holder.bind(it)}
