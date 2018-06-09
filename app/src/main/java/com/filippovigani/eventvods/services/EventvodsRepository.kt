@@ -5,8 +5,12 @@ import com.filippovigani.eventvods.models.Event
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import android.arch.lifecycle.MutableLiveData
+import android.databinding.ObservableList
 import com.filippovigani.eventvods.networking.Endpoint
 import com.filippovigani.eventvods.networking.HttpsRequestTask
+import android.arch.lifecycle.MediatorLiveData
+import android.arch.lifecycle.Observer
+import android.databinding.ObservableArrayList
 
 
 class EventvodsRepository {
@@ -15,40 +19,28 @@ class EventvodsRepository {
 		inline fun <reified T> Gson.fromJson(json: String) = this.fromJson<T>(json, object: TypeToken<T>() {}.type)
 		val gson = Gson()
 
-		var events : List<Event>? = null
+		val events : MutableLiveData<ObservableList<Event>> = MutableLiveData()
 
-		fun getEvents(callback: (List<Event>) -> Unit){
-			//TODO change to LiveData
+		fun fetchEvents() : LiveData<ObservableList<Event>>{
+			//TODO: Consider using List instead of ObservableList
 			HttpsRequestTask({ response ->
-				run {
-				}
-				val events = gson.fromJson<List<Event>>(response)
-				Companion.events = events
-				callback(events)
+				val observableEvents = ObservableArrayList<Event>()
+				observableEvents.addAll(gson.fromJson<List<Event>>(response))
+				events.postValue(observableEvents)
 			}).execute(Endpoint.EVENTS.url)
+			return events
 		}
 
 		fun getEvent(eventId: String) : LiveData<Event>{
-			//TODO Adopt a proper cache
-			/*val cached = eventsCache.get(eventId)
-			if (cached != null) {
-				return cached
-			}*/
-			val data = MutableLiveData<Event>()
-
-			//TODO I mean...
-			events?.find { event -> event.id == eventId }?.let {
-				data.postValue(it)
-				return data
-			}
-
-			getEvents { events ->
+			//TODO: Adopt a proper cache
+			val event = MediatorLiveData<Event>()
+			event.addSource(events, { events ->
+				//TODO: Use an observable hashmap
 				events?.find { event -> event.id == eventId }?.let {
-					data.postValue(it)
+					event.postValue(it)
 				}
-			}
-
-			return data
+			})
+			return event
 		}
 	}
 }

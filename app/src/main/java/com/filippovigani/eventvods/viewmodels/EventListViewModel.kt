@@ -1,5 +1,7 @@
 package com.filippovigani.eventvods.viewmodels
 
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MediatorLiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableArrayList
@@ -8,23 +10,17 @@ import com.filippovigani.eventvods.models.Event
 import com.filippovigani.eventvods.services.EventvodsRepository
 
 class EventListViewModel : ViewModel() {
-	val events: MutableLiveData<ObservableList<Event>> = MutableLiveData()
-	val loading: MutableLiveData<Boolean> = MutableLiveData() //TODO change to data state
+	lateinit var events: LiveData<ObservableList<Event>>
+	val loading: MediatorLiveData<Boolean> = MediatorLiveData() //TODO change to data state
 
 	init {
 		loadEvents()
+		loading.addSource(events, {loading.postValue(false)})
 	}
 
 	fun loadEvents(){
 		loading.postValue(true)
-		EventvodsRepository.getEvents {
-			response ->
-			ObservableArrayList<Event>().let { list ->
-				list.addAll(response)
-				loading.postValue(false)
-				events.postValue(list)
-			}
-		}
+		events = EventvodsRepository.fetchEvents()
 	}
 
 	var selected: Event? = null

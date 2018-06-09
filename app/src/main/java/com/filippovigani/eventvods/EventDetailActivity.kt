@@ -42,8 +42,7 @@ class EventDetailActivity : AppCompatActivity() {
 			// using a fragment transaction.
 			val fragment = EventDetailFragment().apply {
 				arguments = Bundle().apply {
-					putString(EventDetailFragment.ARG_EVENT_ID,
-							intent.getStringExtra(EventDetailFragment.ARG_EVENT_ID))
+					putString(EventDetailFragment.ARG_EVENT_ID, intent.getStringExtra(EventDetailFragment.ARG_EVENT_ID))
 				}
 			}
 
