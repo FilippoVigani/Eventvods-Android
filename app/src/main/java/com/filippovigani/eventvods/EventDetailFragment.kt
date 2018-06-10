@@ -11,7 +11,9 @@ import com.filippovigani.eventvods.databinding.EventDetailBinding
 import com.filippovigani.eventvods.viewmodels.EventDetailViewModel
 import kotlinx.android.synthetic.main.activity_event_detail.*
 import android.arch.lifecycle.ViewModelProviders
-
+import com.squareup.picasso.Picasso
+import android.view.ViewTreeObserver
+import com.squareup.picasso.Callback
 
 
 /**
@@ -26,10 +28,8 @@ class EventDetailFragment : Fragment() {
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		arguments?.let {
-			if (it.containsKey(ARG_EVENT_ID)) {
-				viewModel = ViewModelProviders.of(this, EventDetailViewModel.Factory(it[ARG_EVENT_ID] as String)).get(EventDetailViewModel::class.java)
-			}
+		arguments?.getString(ARG_EVENT_ID)?.let {eventId ->
+			viewModel = ViewModelProviders.of(this, EventDetailViewModel.Factory(eventId)).get(EventDetailViewModel::class.java)
 		}
 	}
 
@@ -37,17 +37,14 @@ class EventDetailFragment : Fragment() {
 	                          savedInstanceState: Bundle?): View? {
 		val binding: EventDetailBinding = DataBindingUtil.inflate(inflater, R.layout.event_detail, container, false)
 		binding.setLifecycleOwner(this)
-		binding.viewModel = viewModel?.also {
-			it.event.observe(this, Observer{event -> activity?.toolbar_layout?.title = event?.name})
-		}
+		binding.viewModel = viewModel
+
 		return binding.root
 	}
 
 	companion object {
-		/**
-		 * The fragment argument representing the item ID that this fragment
-		 * represents.
-		 */
 		const val ARG_EVENT_ID = "event_id"
+		const val ARG_EVENT_NAME = "event_name"
+		const val ARG_EVENT_LOGO_URL = "event_logo_url"
 	}
 }

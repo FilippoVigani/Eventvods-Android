@@ -63,6 +63,7 @@
 
 			<ImageView
 				android:id="@+id/event_image"
+				android:transitionName="event_logo"
 				android:layout_width="match_parent"
 				android:layout_height="160dp"
 				android:scaleType="fitCenter"

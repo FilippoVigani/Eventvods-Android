@@ -3,6 +3,8 @@ package com.filippovigani.eventvods.views
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.ActivityOptionsCompat
+import android.support.v4.view.ViewCompat
 import android.view.View
 import com.filippovigani.eventvods.EventDetailActivity
 import com.filippovigani.eventvods.EventDetailFragment
@@ -14,7 +16,8 @@ import com.filippovigani.eventvods.models.Event
 import com.filippovigani.eventvods.viewmodels.EventListViewModel
 import com.filippovigani.eventvods.viewmodels.EventContentViewModel
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.fragment_event.view.*
+import kotlinx.android.synthetic.main.event_list_content.*
+import kotlinx.android.synthetic.main.event_list_content.view.*
 
 class EventsAdapter(items: Collection<Event>? = null,
                     private val parentActivity: EventListActivity,
@@ -24,12 +27,12 @@ class EventsAdapter(items: Collection<Event>? = null,
 
 	init {
 		onClickListener = View.OnClickListener { view ->
-			val item = view.tag as Event
-			ViewModelProviders.of(parentActivity).get(EventListViewModel::class.java).selected = item
+			val event = view.tag as Event
+			ViewModelProviders.of(parentActivity).get(EventListViewModel::class.java).selected = event
 			if (twoPane) {
 				val fragment = EventDetailFragment().apply {
 					arguments = Bundle().apply {
-						putString(EventDetailFragment.ARG_EVENT_ID, item.id)
+						putString(EventDetailFragment.ARG_EVENT_ID, event.id)
 					}
 				}
 
@@ -39,14 +42,17 @@ class EventsAdapter(items: Collection<Event>? = null,
 						.commit()
 			} else {
 				val intent = Intent(view.context, EventDetailActivity::class.java).apply {
-					putExtra(EventDetailFragment.ARG_EVENT_ID, item.id)
+					putExtra(EventDetailFragment.ARG_EVENT_ID, event.id)
+					putExtra(EventDetailFragment.ARG_EVENT_NAME, event.name)
+					putExtra(EventDetailFragment.ARG_EVENT_LOGO_URL, event.logo)
 				}
-				view.context.startActivity(intent)
+				val options: ActivityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(parentActivity, view.event_image, ViewCompat.getTransitionName(parentActivity.event_image))
+				view.context.startActivity(intent, options.toBundle())
 			}
 		}
 	}
 
-	override fun getLayoutIdForPosition(position: Int) = R.layout.fragment_event
+	override fun getLayoutIdForPosition(position: Int) = R.layout.event_list_content
 
 	override fun getViewModel(position: Int) = EventContentViewModel(items?.get(position) ?: Event(null))
 

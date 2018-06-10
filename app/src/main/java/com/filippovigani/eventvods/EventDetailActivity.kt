@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_event_detail.*
 
 /**
@@ -50,6 +52,18 @@ class EventDetailActivity : AppCompatActivity() {
 					.add(R.id.event_detail_container, fragment)
 					.commit()
 		}
+
+		toolbar_layout?.title = intent.extras.getString(EventDetailFragment.ARG_EVENT_NAME)//TODO: use binding with a shared viewmodel instead
+
+		postponeEnterTransition()
+		Picasso.get().load(intent.extras.getString(EventDetailFragment.ARG_EVENT_LOGO_URL)).into(event_image, object : Callback {
+			override fun onSuccess() {
+				startPostponedEnterTransition()
+			}
+			override fun onError(e: Exception) {
+				startPostponedEnterTransition()
+			}
+		})
 	}
 
 	override fun onOptionsItemSelected(item: MenuItem) =
@@ -60,8 +74,8 @@ class EventDetailActivity : AppCompatActivity() {
 					// more details, see the Navigation pattern on Android Design:
 					//
 					// http://developer.android.com/design/patterns/navigation.html#up-vs-back
-
-					navigateUpTo(Intent(this, EventListActivity::class.java))
+					finishAfterTransition()
+					//navigateUpTo(Intent(this, EventListActivity::class.java))
 					true
 				}
 				else -> super.onOptionsItemSelected(item)

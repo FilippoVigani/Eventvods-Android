@@ -36,8 +36,8 @@ class EventListActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListe
 		super.onCreate(savedInstanceState)
 
 		val binding: ActivityEventListBinding = DataBindingUtil.setContentView(this, R.layout.activity_event_list)
-		//binding.viewModel = EventListViewModel(null, null)
 		val viewModel = ViewModelProviders.of(this).get(EventListViewModel::class.java)
+		binding.viewModel = viewModel
 
 		setSupportActionBar(toolbar)
 		toolbar.title = title
@@ -83,14 +83,5 @@ class EventListActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListe
 
 	override fun onRefresh() {
 		ViewModelProviders.of(this).get(EventListViewModel::class.java).loadEvents()
-		/*EventvodsRepository.getEvents {
-			events -> run {
-				ObservableArrayList<Event>().let { list ->
-					list.addAll(events)
-					//viewAdapter.events = list
-					}
-				}
-			swipeRefreshLayout.post { swipeRefreshLayout.isRefreshing = false }
-		}*/
 	}
 }
