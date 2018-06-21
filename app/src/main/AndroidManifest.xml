@@ -12,7 +12,7 @@
 		android:supportsRtl="true"
 		android:theme="@style/AppTheme">
 		<activity
-			android:name=".EventListActivity"
+			android:name=".views.EventListActivity"
 			android:label="@string/title_event_list"
 			android:theme="@style/AppTheme.NoActionBar"
 			android:launchMode="singleTop">
@@ -23,13 +23,13 @@
 			</intent-filter>
 		</activity>
 		<activity
-			android:name=".EventDetailActivity"
+			android:name=".views.EventDetailActivity"
 			android:label="@string/title_event_detail"
-			android:parentActivityName=".EventListActivity"
+			android:parentActivityName=".views.EventListActivity"
 			android:theme="@style/AppTheme.NoActionBar">
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
-				android:value="com.filippovigani.eventvods.EventListActivity" />
+				android:value="com.filippovigani.eventvods.views.EventListActivity" />
 		</activity>
 	</application>
 

@@ -1,4 +1,4 @@
-package com.filippovigani.eventvods
+package com.filippovigani.eventvods.views
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
@@ -8,10 +8,11 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
+import com.filippovigani.eventvods.R
 import com.filippovigani.eventvods.databinding.ActivityEventListBinding
 
 import com.filippovigani.eventvods.viewmodels.EventListViewModel
-import com.filippovigani.eventvods.views.EventsAdapter
+import com.filippovigani.eventvods.views.adapters.EventsAdapter
 import kotlinx.android.synthetic.main.activity_event_list.*
 import kotlinx.android.synthetic.main.event_list.*
 
@@ -30,7 +31,6 @@ class EventListActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListe
 	private lateinit var viewAdapter: EventsAdapter//RecyclerView.Adapter<*>
 	private lateinit var viewManager: RecyclerView.LayoutManager
 	private lateinit var swipeRefreshLayout : SwipeRefreshLayout
-	private var twoPane: Boolean = false
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -45,7 +45,7 @@ class EventListActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListe
 		val context = this
 
 		viewManager = LinearLayoutManager(context)
-		viewAdapter = EventsAdapter(null, this, twoPane)
+		viewAdapter = EventsAdapter(null, this)
 		recyclerView = event_list.apply {
 			setHasFixedSize(true)
 			layoutManager = viewManager
@@ -71,14 +71,6 @@ class EventListActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListe
 			Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 					.setAction("Action", null).show()
 		}*/
-
-		if (event_detail_container != null) {
-			// The detail container view will be present only in the
-			// large-screen layouts (res/values-w900dp).
-			// If this view is present, then the
-			// activity should be in two-pane mode.
-			twoPane = true
-		}
 	}
 
 	override fun onRefresh() {

@@ -11,9 +11,9 @@ import android.support.annotation.NonNull
 
 
 
-class EventDetailViewModel(eventId: String) : ViewModel() {
+class EventDetailViewModel(eventSlug: String) : ViewModel() {
 
-	var event: LiveData<Event> = EventvodsRepository.getEvent(eventId)
+	var event: LiveData<Event> = EventvodsRepository.getEvent(eventSlug)
 
 	class Factory(private val eventId: String) : ViewModelProvider.NewInstanceFactory() {
 

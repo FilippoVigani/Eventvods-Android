@@ -11,9 +11,9 @@ object RecyclerViewBindings {
 
 	@BindingAdapter("items")
 	fun <T> setItems(recyclerView: RecyclerView, items: Collection<T>) {
-		val adapter = recyclerView.adapter as RecyclerViewAdapter<T>
+		val adapter = recyclerView.adapter as RecyclerViewAdapter<T>?
 		if (adapter != null) {
-			adapter!!.items = items as ObservableList<T>
+			adapter.items = items as ObservableList<T>
 		} else {
 			recyclerView.setTag(KEY_ITEMS, items)
 		}

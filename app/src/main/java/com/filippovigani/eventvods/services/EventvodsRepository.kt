@@ -31,12 +31,12 @@ class EventvodsRepository {
 			return events
 		}
 
-		fun getEvent(eventId: String) : LiveData<Event>{
+		fun getEvent(eventSlug: String) : LiveData<Event>{
 			//TODO: Adopt a proper cache
 			val event = MediatorLiveData<Event>()
 			event.addSource(events, { events ->
 				//TODO: Use an observable hashmap
-				events?.find { event -> event.id == eventId }?.let {
+				events?.find { event -> event.slug == eventSlug }?.let {
 					event.postValue(it)
 				}
 			})

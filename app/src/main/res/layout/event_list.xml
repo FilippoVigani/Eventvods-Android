@@ -9,7 +9,7 @@
 	android:layout_marginLeft="16dp"
 	android:layout_marginRight="16dp"
 	app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-	tools:context=".EventListActivity"
+	tools:context=".views.EventListActivity"
 	tools:listitem="@layout/event_list_content"
 	tools:showIn="@layout/activity_event_list"
 	/>

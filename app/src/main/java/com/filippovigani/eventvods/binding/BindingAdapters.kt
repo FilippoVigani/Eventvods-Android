@@ -1,15 +1,8 @@
 package com.filippovigani.eventvods.binding
 
-import android.arch.lifecycle.MutableLiveData
 import android.databinding.BindingAdapter
-import android.databinding.ObservableList
 import android.widget.ImageView
 import com.filippovigani.eventvods.R
-import android.support.v7.widget.RecyclerView
-import com.filippovigani.eventvods.EventListActivity
-import com.filippovigani.eventvods.models.Event
-import com.filippovigani.eventvods.views.EventsAdapter
-
 
 
 @BindingAdapter("gameSlug")

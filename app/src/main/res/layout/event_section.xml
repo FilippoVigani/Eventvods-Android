@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	tools:context=".EventSectionFragment">
+	<data>
+		<variable name="viewModel" type="com.filippovigani.eventvods.models.Event.Section" />
+	</data>
+	<android.support.design.widget.CoordinatorLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:fitsSystemWindows="true" >
+		<android.support.v4.widget.NestedScrollView
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:text="@{viewModel.id}"/>
+		</android.support.v4.widget.NestedScrollView>
+	</android.support.design.widget.CoordinatorLayout>
+</layout>
