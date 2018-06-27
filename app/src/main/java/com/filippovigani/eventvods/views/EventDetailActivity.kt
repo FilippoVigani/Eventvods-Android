@@ -79,10 +79,10 @@ class EventDetailActivity : AppCompatActivity() {
 		}*/
 
 		toolbar_layout?.title = intent.extras.getString(ARG_EVENT_NAME)//TODO: use binding with a shared viewmodel instead
-
 		postponeEnterTransition()
 		Picasso.get().load(intent.extras.getString(ARG_EVENT_LOGO_URL)).into(event_image, object : Callback {
 			override fun onSuccess() {
+				event_image.setBackgroundColor(intent.extras.getInt(ARG_EVENT_LOGO_BACKGROUND))
 				startPostponedEnterTransition()
 			}
 			override fun onError(e: Exception) {
@@ -111,5 +111,6 @@ class EventDetailActivity : AppCompatActivity() {
 		const val ARG_EVENT_SLUG = "event_slug"
 		const val ARG_EVENT_NAME = "event_name"
 		const val ARG_EVENT_LOGO_URL = "event_logo_url"
+		const val ARG_EVENT_LOGO_BACKGROUND = "event_logo_background"
 	}
 }

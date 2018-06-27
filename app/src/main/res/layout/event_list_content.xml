@@ -67,7 +67,7 @@
 				android:layout_width="match_parent"
 				android:layout_height="160dp"
 				android:scaleType="fitCenter"
-				android:background="@color/cardview_dark_background"
+				android:background="@color/cardview_light_background"
 				android:padding="16dp"
 				android:contentDescription="@{viewModel.event.name}"
 				/>
