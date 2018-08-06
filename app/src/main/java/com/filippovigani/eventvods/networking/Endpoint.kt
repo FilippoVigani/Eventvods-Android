@@ -11,10 +11,10 @@ enum class Endpoint(service: String) {
 
 	private val path: String = baseUrl + service
 
-	fun url(vararg params: String): String {
+	fun url(vararg params: String): URL {
 		var url = this.path
 		for (param in params) url += "/$param"
-		return url
+		return URL(url)
 	}
-	val url: URL = URL(this.path)
+	val url: URL = url()
 }

@@ -50,7 +50,7 @@
 						android:text="@{viewModel.event.name}"
 						android:textColor="#000"
 						android:textSize="18sp"
-						android:textAppearance="?attr/textAppearanceListItem"/>
+						android:textAppearance="?android:attr/textAppearanceListItem"/>
 
 					<TextView
 						android:layout_width="match_parent"

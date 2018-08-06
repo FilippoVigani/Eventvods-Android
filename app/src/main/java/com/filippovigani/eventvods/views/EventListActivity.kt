@@ -29,7 +29,7 @@ class EventListActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListe
 
 	private lateinit var recyclerView: RecyclerView
 	private lateinit var viewAdapter: EventsAdapter//RecyclerView.Adapter<*>
-	private lateinit var layoutManager: RecyclerView.LayoutManager
+	//private lateinit var layoutManager: RecyclerView.LayoutManager
 	private lateinit var swipeRefreshLayout : SwipeRefreshLayout
 
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,12 +44,12 @@ class EventListActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListe
 
 		val context = this
 
-		layoutManager = LinearLayoutManager(context)
+		//layoutManager = LinearLayoutManager(context)
 
 		viewAdapter = EventsAdapter(null, this)
 		recyclerView = event_list.apply {
 			setHasFixedSize(true)
-			layoutManager = layoutManager
+			//layoutManager = layoutManager
 			adapter = viewAdapter
 		}
 

@@ -33,13 +33,19 @@ class EventvodsRepository {
 
 		fun getEvent(eventSlug: String) : LiveData<Event>{
 			//TODO: Adopt a proper cache
+			val event = MutableLiveData<Event>()
+
+			HttpsRequestTask({ response ->
+				event.postValue(gson.fromJson<Event>(response))
+			}).execute(Endpoint.EVENT.url(eventSlug))
+			/*
 			val event = MediatorLiveData<Event>()
 			event.addSource(events, { events ->
 				//TODO: Use an observable hashmap
 				events?.find { event -> event.slug == eventSlug }?.let {
 					event.postValue(it)
 				}
-			})
+			})*/
 			return event
 		}
 	}
