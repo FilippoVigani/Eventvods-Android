@@ -44,15 +44,16 @@ class EventSectionFragment : Fragment() {
 
 			parentVM.event.observe(this, Observer { event ->
 				val section = event?.sections?.get(sectionIndex)
-				binding.viewModel = section
-				val matches = ObservableArrayList<Any>()
-				section?.modules?.forEach { module -> run {
-					//Add module for header
-					matches.add(module)
-					//Add matches for content
-					module.matches?.apply { matches.addAll(this) }
-				} }
-				viewAdapter.items = matches
+				if (section != null){
+					val viewModel = ViewModelProviders.of(this, EventSectionViewModel.Factory(section)).get(EventSectionViewModel::class.java)
+					binding.viewModel = viewModel
+					val matches = ObservableArrayList<Any>()
+					section.modules?.forEach { module -> run {
+						matches.add(module) //Add module for header
+						module.matches?.apply { matches.addAll(this) } //Add matches for content
+					} }
+					viewAdapter.items = matches
+				}
 			})
 		}
 

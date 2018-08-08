@@ -1,8 +1,11 @@
 package com.filippovigani.eventvods.binding
 
 import android.databinding.BindingAdapter
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.widget.ImageView
 import com.filippovigani.eventvods.R
+import com.squareup.picasso.Picasso
 
 
 @BindingAdapter("gameSlug")
@@ -17,4 +20,9 @@ fun setGameLogo(view: ImageView, gameSlug: String) {
 		else -> R.drawable.generic_game_logo
 	}
 	view.setImageResource(drawable)
+}
+
+@BindingAdapter("src")
+fun setImageViewResource(imageView: ImageView, src: String) {
+	Picasso.get().load(src).into(imageView)
 }

@@ -8,6 +8,10 @@ data class Match(@SerializedName("identifier") val id: String ) {
 	@SerializedName("team2Match")
 	val team2Placeholder: String? = null
 
+	val spoiler1: Boolean = false
+	val spoiler2: Boolean = false
+	val bestOf: Int = 1
+
 	val team1: Team? = null
 	val team2: Team? = null
 }

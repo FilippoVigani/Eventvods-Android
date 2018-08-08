@@ -11,16 +11,15 @@ import io.doist.recyclerviewext.sticky_headers.StickyHeaders
 class MatchesAdapter(items: Collection<Match>? = null,
                      private val context: Context) : RecyclerViewAdapter<Any>(items), StickyHeaders, StickyHeaders.ViewSetup{
 
+	override fun isStickyHeader(position: Int): Boolean {
+		return items?.get(position) !is Match
+	}
 	override fun setupStickyHeaderView(stickyHeader: View?) {
 		stickyHeader?.translationZ = context.resources.getDimension(R.dimen.header_elevation)
 	}
 
 	override fun teardownStickyHeaderView(stickyHeader: View?) {
 		stickyHeader?.translationZ = 0f
-	}
-
-	override fun isStickyHeader(position: Int): Boolean {
-		return items?.get(position) !is Match
 	}
 
 	override fun getViewModel(position: Int) = items?.get(position)

@@ -4,7 +4,7 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	tools:context=".EventSectionFragment">
 	<data>
-		<variable name="viewModel" type="com.filippovigani.eventvods.models.Event.Section" />
+		<variable name="viewModel" type="com.filippovigani.eventvods.viewmodels.EventSectionViewModel" />
 	</data>
 	<android.support.design.widget.CoordinatorLayout
 		android:layout_width="match_parent"
