@@ -19,6 +19,7 @@ import com.filippovigani.eventvods.viewmodels.EventDetailViewModel
 import com.filippovigani.eventvods.viewmodels.EventSectionViewModel
 import com.filippovigani.eventvods.views.adapters.EventsAdapter
 import com.filippovigani.eventvods.views.adapters.MatchesAdapter
+import io.doist.recyclerviewext.sticky_headers.StickyHeadersLinearLayoutManager
 import kotlinx.android.synthetic.main.event_list.*
 import kotlinx.android.synthetic.main.match_list.*
 import kotlinx.android.synthetic.main.match_list.view.*
@@ -44,8 +45,13 @@ class EventSectionFragment : Fragment() {
 			parentVM.event.observe(this, Observer { event ->
 				val section = event?.sections?.get(sectionIndex)
 				binding.viewModel = section
-				val matches = ObservableArrayList<Match>()
-				section?.modules?.forEach { module -> module.matches?.apply { matches.addAll(this) } }
+				val matches = ObservableArrayList<Any>()
+				section?.modules?.forEach { module -> run {
+					//Add module for header
+					matches.add(module)
+					//Add matches for content
+					module.matches?.apply { matches.addAll(this) }
+				} }
 				viewAdapter.items = matches
 			})
 		}
@@ -53,6 +59,7 @@ class EventSectionFragment : Fragment() {
 
 		recyclerView = binding.root.match_list.apply {
 			setHasFixedSize(true)
+			layoutManager = StickyHeadersLinearLayoutManager<MatchesAdapter>(context)
 			adapter = viewAdapter
 		}
 

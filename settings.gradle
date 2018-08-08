@@ -1,1 +1,3 @@
 include ':app'
+include ":sticky_headers"
+project(":sticky_headers").projectDir = file("./third_party/StickyHeaders")
