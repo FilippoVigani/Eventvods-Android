@@ -12,12 +12,11 @@ class MatchesAdapter(items: Collection<Match>? = null,
                      private val context: Context) : RecyclerViewAdapter<Any>(items), StickyHeaders, StickyHeaders.ViewSetup{
 
 	override fun setupStickyHeaderView(stickyHeader: View?) {
-		stickyHeader?.bringToFront()
-		//stickyHeader?.translationZ = context.resources.getDimension(R.dimen.header_height)
+		stickyHeader?.translationZ = context.resources.getDimension(R.dimen.header_elevation)
 	}
 
 	override fun teardownStickyHeaderView(stickyHeader: View?) {
-		//stickyHeader?.translationZ = context.resources.getDimension(R.dimen.header_height)
+		stickyHeader?.translationZ = 0f
 	}
 
 	override fun isStickyHeader(position: Int): Boolean {

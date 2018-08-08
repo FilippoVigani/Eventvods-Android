@@ -11,7 +11,7 @@
 	<FrameLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:background="@android:color/background_light"
+		android:background="?android:colorBackground"
 		android:minHeight="16dp">
 
 		<TextView
@@ -20,7 +20,7 @@
 			android:layout_height="wrap_content"
 			android:layout_gravity="center_vertical"
 			android:gravity="center"
-			android:paddingTop="8dp"
+			android:padding="8dp"
 			android:textSize="16dp"
 			android:text="@{viewModel.title}" />
 
