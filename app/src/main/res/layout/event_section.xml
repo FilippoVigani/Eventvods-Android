@@ -14,7 +14,7 @@
 				android:id="@+id/container"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent">
-				<include layout="@layout/match_list" />
+				<include layout="@layout/match_list" app:viewModel="@{viewModel}" />
 			</FrameLayout>
 	</android.support.design.widget.CoordinatorLayout>
 </layout>

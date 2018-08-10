@@ -26,8 +26,6 @@ import kotlinx.android.synthetic.main.match_list.view.*
 
 class EventSectionFragment : Fragment() {
 	private var sectionIndex: Int = 0
-	private lateinit var recyclerView: RecyclerView
-	private lateinit var viewAdapter: MatchesAdapter
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -39,29 +37,15 @@ class EventSectionFragment : Fragment() {
 		val binding: EventSectionBinding = DataBindingUtil.inflate(inflater, R.layout.event_section, container, false)
 		binding.setLifecycleOwner(this)
 		activity?.let {
-			viewAdapter = MatchesAdapter(null, it)
 			val parentVM = ViewModelProviders.of(it).get(EventDetailViewModel::class.java)
 
 			parentVM.event.observe(this, Observer { event ->
-				val section = event?.sections?.get(sectionIndex)
-				if (section != null){
-					val viewModel = ViewModelProviders.of(this, EventSectionViewModel.Factory(section)).get(EventSectionViewModel::class.java)
-					binding.viewModel = viewModel
-					val matches = ObservableArrayList<Any>()
-					section.modules?.forEach { module -> run {
-						matches.add(module) //Add module for header
-						module.matches?.apply { matches.addAll(this) } //Add matches for content
-					} }
-					viewAdapter.items = matches
+				event?.sections?.get(sectionIndex)?.let {
+					binding.viewModel = ViewModelProviders.of(this, EventSectionViewModel.Factory(it)).get(EventSectionViewModel::class.java)
 				}
 			})
-		}
-
-
-		recyclerView = binding.root.match_list.apply {
-			setHasFixedSize(true)
-			layoutManager = StickyHeadersLinearLayoutManager<MatchesAdapter>(context)
-			adapter = viewAdapter
+			binding.root.match_list.layoutManager = StickyHeadersLinearLayoutManager<MatchesAdapter>(context)
+			binding.root.match_list.adapter = MatchesAdapter(it)
 		}
 
 		return binding.root

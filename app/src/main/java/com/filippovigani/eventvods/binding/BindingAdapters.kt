@@ -59,7 +59,7 @@ object BindingAdapters{
 								val backgroundColor = palette.getMutedColor(ContextCompat.getColor(imageView.context, R.color.cardview_dark_background))
 								imageView.setBackgroundColor(backgroundColor)
 								imageView.setImageBitmap(it)
-								imageView.startAnimation(AnimationUtils.loadAnimation(imageView.context, R.anim.fadein)) //Set animation to your ImageView
+								imageView.startAnimation(AnimationUtils.loadAnimation(imageView.context, R.anim.fadein))
 							}
 						}
 					}

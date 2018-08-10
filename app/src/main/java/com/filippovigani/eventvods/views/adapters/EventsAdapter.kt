@@ -23,8 +23,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.graphics.Palette
 import java.lang.Exception
 import android.graphics.drawable.ColorDrawable
-
-
+import android.support.v4.util.Pair
 
 
 class EventsAdapter(private val parentActivity: EventListActivity, items: List<Event>? = null) : RecyclerViewAdapter<Event>(items) {
@@ -32,17 +31,18 @@ class EventsAdapter(private val parentActivity: EventListActivity, items: List<E
 	private val onClickListener: View.OnClickListener
 
 	init {
+		//TODO: refactor
 		onClickListener = View.OnClickListener { view ->
 			val event = view.tag as Event
 			ViewModelProviders.of(parentActivity).get(EventListViewModel::class.java).selected = event
 			val intent = Intent(view.context, EventDetailActivity::class.java).apply {
 				putExtra(EventDetailActivity.ARG_EVENT_SLUG, event.slug)
-				putExtra(EventDetailActivity.ARG_EVENT_NAME, event.name)
 				putExtra(EventDetailActivity.ARG_EVENT_LOGO_URL, event.logo)
 				putExtra(EventDetailActivity.ARG_EVENT_LOGO_BACKGROUND, (view.event_image.background as ColorDrawable?)?.color)
 			}
 			//TODO: make the whole card view pop up
-			val options: ActivityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(parentActivity, view.event_image, ViewCompat.getTransitionName(parentActivity.event_image))
+			val options: ActivityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(parentActivity,
+					Pair.create<View, String>(view.event_image, ViewCompat.getTransitionName(parentActivity.event_image)))
 			view.context.startActivity(intent, options.toBundle())
 		}
 	}

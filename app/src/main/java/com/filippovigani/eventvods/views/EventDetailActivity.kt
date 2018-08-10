@@ -79,7 +79,6 @@ class EventDetailActivity : AppCompatActivity() {
 
 	companion object {
 		const val ARG_EVENT_SLUG = "event_slug"
-		const val ARG_EVENT_NAME = "event_name"
 		const val ARG_EVENT_LOGO_URL = "event_logo_url"
 		const val ARG_EVENT_LOGO_BACKGROUND = "event_logo_background"
 	}
