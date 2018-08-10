@@ -27,8 +27,7 @@ import android.graphics.drawable.ColorDrawable
 
 
 
-class EventsAdapter(items: List<Event>? = null,
-                    private val parentActivity: EventListActivity) : RecyclerViewAdapter<Event>(items) {
+class EventsAdapter(private val parentActivity: EventListActivity, items: List<Event>? = null) : RecyclerViewAdapter<Event>(items) {
 
 	private val onClickListener: View.OnClickListener
 
