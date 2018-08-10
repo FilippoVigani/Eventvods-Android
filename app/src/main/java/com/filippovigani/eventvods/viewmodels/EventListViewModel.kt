@@ -10,7 +10,7 @@ import com.filippovigani.eventvods.models.Event
 import com.filippovigani.eventvods.services.EventvodsRepository
 
 class EventListViewModel : ViewModel() {
-	lateinit var events: LiveData<ObservableList<Event>>
+	lateinit var events: LiveData<List<Event>>
 	val loading: MediatorLiveData<Boolean> = MediatorLiveData() //TODO change to data state
 
 	init {

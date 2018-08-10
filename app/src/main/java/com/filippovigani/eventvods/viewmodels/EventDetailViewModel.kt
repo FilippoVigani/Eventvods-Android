@@ -15,11 +15,11 @@ class EventDetailViewModel(eventSlug: String) : ViewModel() {
 
 	var event: LiveData<Event> = EventvodsRepository.getEvent(eventSlug)
 
-	class Factory(private val eventId: String) : ViewModelProvider.NewInstanceFactory() {
+	class Factory(private val eventSlug: String) : ViewModelProvider.NewInstanceFactory() {
 
 		@Suppress("UNCHECKED_CAST")
 		override fun <T : ViewModel> create(modelClass: Class<T>): T {
-			return EventDetailViewModel(eventId) as T
+			return EventDetailViewModel(eventSlug) as T
 		}
 	}
 }

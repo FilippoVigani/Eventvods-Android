@@ -7,6 +7,8 @@ data class Event(
 		@SerializedName("_id") val id: String,
 		val slug: String
 ) {
+	var complete = false
+
 	val name: String = "Event"
 	val game: Game? = null
 	val subtitle: String? = ""

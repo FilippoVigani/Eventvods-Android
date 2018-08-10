@@ -38,8 +38,12 @@ class EventDetailActivity : AppCompatActivity() {
 
 		sectionsPagerAdapter = EventSectionsPagerAdapter(supportFragmentManager)
 		binding.root.sectionsViewPager.adapter = sectionsPagerAdapter
+
 		viewModel.event.observe(this, Observer{event ->
 			sectionsPagerAdapter.sections = event?.sections
+			event?.let {
+				toolbar_layout.title = it.name
+			}
 		})
 
 		setSupportActionBar(detail_toolbar)
@@ -52,43 +56,9 @@ class EventDetailActivity : AppCompatActivity() {
 		// Show the Up button in the action bar.
 		supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-		// savedInstanceState is non-null when there is fragment state
-		// saved from previous configurations of this activity
-		// (e.g. when rotating the screen from portrait to landscape).
-		// In this case, the fragment will automatically be re-added
-		// to its container so we don't need to manually add it.
-		// For more information, see the Fragments API guide at:
-		//
-		// http://developer.android.com/guide/components/fragments.html
-		//
 
-
-		/*
-		if (savedInstanceState == null) {
-			// Create the detail fragment and add it to the activity
-			// using a fragment transaction.
-			val fragment = EventDetailFragment().apply {
-				arguments = Bundle().apply {
-					putString(EventDetailFragment.ARG_EVENT_SLUG, intent.getStringExtra(EventDetailFragment.ARG_EVENT_SLUG))
-				}
-			}
-
-			supportFragmentManager.beginTransaction()
-					.add(R.id.event_detail_container, fragment)
-					.commit()
-		}*/
-
-		toolbar_layout?.title = intent.extras.getString(ARG_EVENT_NAME)//TODO: use binding with a shared viewmodel instead
-		postponeEnterTransition()
-		Picasso.get().load(intent.extras.getString(ARG_EVENT_LOGO_URL)).into(event_image, object : Callback {
-			override fun onSuccess() {
-				event_image.setBackgroundColor(intent.extras.getInt(ARG_EVENT_LOGO_BACKGROUND))
-				startPostponedEnterTransition()
-			}
-			override fun onError(e: Exception) {
-				startPostponedEnterTransition()
-			}
-		})
+		event_image.setBackgroundColor(intent.extras.getInt(ARG_EVENT_LOGO_BACKGROUND))
+		Picasso.get().load(intent.extras.getString(ARG_EVENT_LOGO_URL)).into(event_image)
 
 	}
 

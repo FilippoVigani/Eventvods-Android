@@ -8,7 +8,7 @@ import com.filippovigani.eventvods.binding.*
 import com.filippovigani.eventvods.models.*
 import io.doist.recyclerviewext.sticky_headers.StickyHeaders
 
-class MatchesAdapter(items: Collection<Match>? = null,
+class MatchesAdapter(items: List<Match>? = null,
                      private val context: Context) : RecyclerViewAdapter<Any>(items), StickyHeaders, StickyHeaders.ViewSetup{
 
 	override fun isStickyHeader(position: Int): Boolean {

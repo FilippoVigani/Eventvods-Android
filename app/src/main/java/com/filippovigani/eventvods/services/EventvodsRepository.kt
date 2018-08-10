@@ -17,35 +17,32 @@ class EventvodsRepository {
 	companion object {
 
 		inline fun <reified T> Gson.fromJson(json: String) = this.fromJson<T>(json, object: TypeToken<T>() {}.type)
-		val gson = Gson()
+		private val gson = Gson()
 
-		val events : MutableLiveData<ObservableList<Event>> = MutableLiveData()
+		private val events : MutableLiveData<List<Event>> = MutableLiveData()
+		private val eventsMap : HashMap<String, Event> = HashMap()
 
-		fun fetchEvents() : LiveData<ObservableList<Event>>{
+		fun fetchEvents() : LiveData<List<Event>>{
 			//TODO: Consider using List instead of ObservableList
 			HttpsRequestTask({ response ->
-				val observableEvents = ObservableArrayList<Event>()
-				observableEvents.addAll(gson.fromJson<List<Event>>(response))
-				events.postValue(observableEvents)
+				val results = gson.fromJson<List<Event>>(response)
+				results.forEach({event -> eventsMap[event.slug] = event })
+				events.postValue(results)
 			}).execute(Endpoint.EVENTS.url)
 			return events
 		}
 
 		fun getEvent(eventSlug: String) : LiveData<Event>{
-			//TODO: Adopt a proper cache
 			val event = MutableLiveData<Event>()
-
-			HttpsRequestTask({ response ->
-				event.postValue(gson.fromJson<Event>(response))
-			}).execute(Endpoint.EVENT.url(eventSlug))
-			/*
-			val event = MediatorLiveData<Event>()
-			event.addSource(events, { events ->
-				//TODO: Use an observable hashmap
-				events?.find { event -> event.slug == eventSlug }?.let {
-					event.postValue(it)
-				}
-			})*/
+			event.postValue(eventsMap[eventSlug])
+			if (eventsMap[eventSlug]?.complete == false){
+				HttpsRequestTask({ response ->
+					val result = gson.fromJson<Event>(response)
+					eventsMap[result.slug] = result
+					result.complete = true
+					event.postValue(result)
+				}).execute(Endpoint.EVENT.url(eventSlug))
+			}
 			return event
 		}
 	}

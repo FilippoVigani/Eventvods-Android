@@ -70,6 +70,7 @@
 				android:background="@color/cardview_light_background"
 				android:padding="16dp"
 				android:contentDescription="@{viewModel.event.name}"
+				app:eventLogo="@{viewModel.event.logo}"
 				/>
 
 			<LinearLayout

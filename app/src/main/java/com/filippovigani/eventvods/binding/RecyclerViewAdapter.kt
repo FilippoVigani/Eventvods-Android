@@ -10,36 +10,20 @@ import android.view.ViewGroup
 import android.databinding.ObservableList
 import java.lang.ref.WeakReference
 
-abstract class RecyclerViewAdapter<T>(items: Collection<T>? = null) : RecyclerView.Adapter<RecyclerViewViewHolder>() {
+abstract class RecyclerViewAdapter<T>(items: List<T>? = null) : RecyclerView.Adapter<RecyclerViewViewHolder>() {
 
-	private val onListChangedCallback: WeakReferenceOnListChangedCallback<T>?
+	//private val onListChangedCallback: WeakReferenceOnListChangedCallback<T>?
 
-	var items: ObservableList<T>? = null
+	var items: List<T>? = null
 		set(value){
 			if (field == value) return
-			/* TODO: Manage with [DiffUtil] instead */
-			field?.let {
-				notifyItemRangeRemoved(0, it.size)
-				it.removeOnListChangedCallback(this.onListChangedCallback)
-			}
 			field = value
-			notifyItemRangeInserted(0, field?.size ?: 0)
-			field?.addOnListChangedCallback(this.onListChangedCallback)
+			notifyDataSetChanged()
 		}
 
 	init {
-		this.onListChangedCallback = WeakReferenceOnListChangedCallback(this)
-
-		items?.let{
-			if (it is ObservableList<*>) {
-				this.items = it as ObservableList<T>
-			} else {
-				ObservableArrayList<T>().let { list ->
-					list.addAll(it)
-					this.items = list
-				}
-			}
-		}
+		//this.onListChangedCallback = WeakReferenceOnListChangedCallback(this)
+		this.items = items
 	}
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =

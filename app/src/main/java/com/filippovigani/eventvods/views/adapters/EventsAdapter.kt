@@ -27,7 +27,7 @@ import android.graphics.drawable.ColorDrawable
 
 
 
-class EventsAdapter(items: Collection<Event>? = null,
+class EventsAdapter(items: List<Event>? = null,
                     private val parentActivity: EventListActivity) : RecyclerViewAdapter<Event>(items) {
 
 	private val onClickListener: View.OnClickListener
@@ -57,35 +57,6 @@ class EventsAdapter(items: Collection<Event>? = null,
 	override fun onBindViewHolder(holder: RecyclerViewViewHolder, position: Int) {
 		val eventViewModel = getViewModel(position)?.apply {
 			holder.bind(this)
-
-			//TODO: cache palettes. See https://jakewharton.com/coercing-picasso-to-play-with-palette/
-			val imageViewTarget = object : Target {
-				override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
-					bitmap?.let {
-						holder.itemView.event_image.setImageBitmap(it)
-						Palette.from(it).generate { palette ->
-							val backgroundColor = palette.getMutedColor(ContextCompat.getColor(holder.itemView.context, R.color.cardview_dark_background))
-							holder.itemView.event_image.setBackgroundColor(backgroundColor)
-						}
-					}
-				}
-
-				override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
-					holder.itemView.event_image.setImageDrawable(placeHolderDrawable)
-					(holder.itemView.event_image.tag as Target?)?.let {
-						holder.itemView.event_image.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.cardview_light_background))
-						Picasso.get().cancelRequest(it)
-					}
-					holder.itemView.event_image.tag = this
-				}
-
-				override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
-					holder.itemView.event_image.setImageDrawable(errorDrawable)
-				}
-			}
-
-			Picasso.get().load(this.event.logo).into(imageViewTarget)
-
 		}
 
 		holder.itemView.apply {
