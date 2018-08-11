@@ -3,35 +3,35 @@
 	<style name="AppTheme.lol" parent="AppTheme.NoActionBar">
 		<item name="colorPrimary">@color/lol_primary</item>
 		<item name="colorPrimaryDark">@color/lol_primary_dark</item>
-		<!-- <item name="colorPrimaryLight">@color/lol_primary_light</item> -->
+		<item name="colorPrimaryLight">@color/lol_primary_light</item>
 		<item name="colorAccent">@color/lol_accent</item>
 	</style>
 
 	<style name="AppTheme.dota" parent="AppTheme.NoActionBar">
 		<item name="colorPrimary">@color/dota_primary</item>
 		<item name="colorPrimaryDark">@color/dota_primary_dark</item>
-		<!-- <item name="colorPrimaryLight">@color/dota_primary_light</item>  -->
+		<item name="colorPrimaryLight">@color/dota_primary_light</item>
 		<item name="colorAccent">@color/dota_accent</item>
 	</style>
 
 	<style name="AppTheme.csgo" parent="AppTheme.NoActionBar">
 		<item name="colorPrimary">@color/csgo_primary</item>
 		<item name="colorPrimaryDark">@color/csgo_primary_dark</item>
-		<!-- <item name="colorPrimaryLight">@color/csgo_primary_light</item>  -->
+		<item name="colorPrimaryLight">@color/csgo_primary_light</item>
 		<item name="colorAccent">@color/csgo_accent</item>
 	</style>
 
 	<style name="AppTheme.overwatch" parent="AppTheme.NoActionBar">
 		<item name="colorPrimary">@color/overwatch_primary</item>
 		<item name="colorPrimaryDark">@color/overwatch_primary_dark</item>
-		<!-- <item name="colorPrimaryLight">@color/overwatch_primary_light</item>  -->
+		<item name="colorPrimaryLight">@color/overwatch_primary_light</item>
 		<item name="colorAccent">@color/overwatch_accent</item>
 	</style>
 
 	<style name="AppTheme.rocketleague" parent="AppTheme.NoActionBar">
 		<item name="colorPrimary">@color/rocketleague_primary</item>
 		<item name="colorPrimaryDark">@color/rocketleague_primary_dark</item>
-		<!-- <item name="colorPrimaryLight">@color/rocketleague_primary_light</item>  -->
+		<item name="colorPrimaryLight">@color/rocketleague_primary_light</item>
 		<item name="colorAccent">@color/rocketleague_accent</item>
 	</style>
 </resources>

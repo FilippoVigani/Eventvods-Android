@@ -4,7 +4,7 @@
 		<item name="colorPrimary">@color/primary</item>
 		<item name="colorPrimaryDark">@color/primary_dark</item>
 		<item name="colorAccent">@color/accent</item>
-		<!-- <item name="colorPrimaryLight">@color/primary_light</item> -->
+		<item name="colorPrimaryLight">@color/primary_light</item>
 		<!-- <item name="colorControlNormal"> controls the ‘normal’ state of components such as an unselected EditText, and unselected Checkboxes and RadioButtons</item> -->
 		<!-- <item name="colorControlActivated"> overrides colorAccent as the activated or checked state for Checkboxes and RadioButtons</item> -->
 		<!-- <item name="colorControlHighlight"> controls the ripple coloring -->
