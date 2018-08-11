@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="dota_primary">#F44336</color>
+	<color name="dota_primary_dark">#D32F2F</color>
+	<color name="dota_primary_light">#FFCDD2</color>
+	<color name="dota_accent">#FF5252</color>
+	<color name="dota_primary_text">#212121</color>
+	<color name="dota_secondary_text">#757575</color>
+	<color name="dota_icons">#FFFFFF</color>
+	<color name="dota_divider">#BDBDBD</color>
+
+	<color name="lol_primary">#009688</color>
+	<color name="lol_primary_dark">#00796B</color>
+	<color name="lol_primary_light">#B2DFDB</color>
+	<color name="lol_accent">#009688</color>
+	<color name="lol_primary_text">#212121</color>
+	<color name="lol_secondary_text">#757575</color>
+	<color name="lol_icons">#FFFFFF</color>
+	<color name="lol_divider">#BDBDBD</color>
+
+	<color name="overwatch_primary">#FF9800</color>
+	<color name="overwatch_primary_dark">#F57C00</color>
+	<color name="overwatch_primary_light">#FFE0B2</color>
+	<color name="overwatch_accent">#FF5722</color>
+	<color name="overwatch_primary_text">#212121</color>
+	<color name="overwatch_secondary_text">#757575</color>
+	<color name="overwatch_icons">#212121</color>
+	<color name="overwatch_divider">#BDBDBD</color>
+
+	<color name="csgo_primary">#2196F3</color>
+	<color name="csgo_primary_dark">#1976D2</color>
+	<color name="csgo_primary_light">#BBDEFB</color>
+	<color name="csgo_accent">#448AFF</color>
+	<color name="csgo_primary_text">#212121</color>
+	<color name="csgo_secondary_text">#757575</color>
+	<color name="csgo_icons">#FFFFFF</color>
+	<color name="csgo_divider">#BDBDBD</color>
+
+	<color name="rocketleague_primary">#673AB7</color>
+	<color name="rocketleague_primary_dark">#512DA8</color>
+	<color name="rocketleague_primary_light">#D1C4E9</color>
+	<color name="rocketleague_accent">#536DFE</color>
+	<color name="rocketleague_primary_text">#212121</color>
+	<color name="rocketleague_secondary_text">#757575</color>
+	<color name="rocketleague_icons">#FFFFFF</color>
+	<color name="rocketleague_divider">#BDBDBD</color>
+</resources>

@@ -37,6 +37,7 @@ class EventsAdapter(private val parentActivity: EventListActivity, items: List<E
 			ViewModelProviders.of(parentActivity).get(EventListViewModel::class.java).selected = event
 			val intent = Intent(view.context, EventDetailActivity::class.java).apply {
 				putExtra(EventDetailActivity.ARG_EVENT_SLUG, event.slug)
+				putExtra(EventDetailActivity.ARG_GAME_SLUG, event.game?.slug)
 				putExtra(EventDetailActivity.ARG_EVENT_LOGO_URL, event.logo)
 				putExtra(EventDetailActivity.ARG_EVENT_LOGO_BACKGROUND, (view.event_image.background as ColorDrawable?)?.color)
 			}

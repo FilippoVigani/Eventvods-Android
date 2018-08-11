@@ -3,6 +3,7 @@ package com.filippovigani.eventvods.views
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
@@ -28,6 +29,7 @@ class EventDetailActivity : AppCompatActivity() {
 	private lateinit var viewModel : EventDetailViewModel
 
 	override fun onCreate(savedInstanceState: Bundle?) {
+		setTheme(ThemeUtils.getGameTheme(intent.getStringExtra(ARG_GAME_SLUG)))
 		super.onCreate(savedInstanceState)
 
 		val binding: ActivityEventDetailBinding = DataBindingUtil.setContentView(this, R.layout.activity_event_detail)
@@ -56,7 +58,6 @@ class EventDetailActivity : AppCompatActivity() {
 		// Show the Up button in the action bar.
 		supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-
 		event_image.setBackgroundColor(intent.extras.getInt(ARG_EVENT_LOGO_BACKGROUND))
 		Picasso.get().load(intent.extras.getString(ARG_EVENT_LOGO_URL)).into(event_image)
 
@@ -79,6 +80,7 @@ class EventDetailActivity : AppCompatActivity() {
 
 	companion object {
 		const val ARG_EVENT_SLUG = "event_slug"
+		const val ARG_GAME_SLUG = "game_slug"
 		const val ARG_EVENT_LOGO_URL = "event_logo_url"
 		const val ARG_EVENT_LOGO_BACKGROUND = "event_logo_background"
 	}

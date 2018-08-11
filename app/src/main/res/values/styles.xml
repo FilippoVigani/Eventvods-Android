@@ -1,11 +1,15 @@
 <resources>
 
-	<!-- Base application theme. -->
 	<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-		<!-- Customize your theme here. -->
 		<item name="colorPrimary">@color/primary</item>
 		<item name="colorPrimaryDark">@color/primary_dark</item>
 		<item name="colorAccent">@color/accent</item>
+		<!-- <item name="colorPrimaryLight">@color/primary_light</item> -->
+		<!-- <item name="colorControlNormal"> controls the ‘normal’ state of components such as an unselected EditText, and unselected Checkboxes and RadioButtons</item> -->
+		<!-- <item name="colorControlActivated"> overrides colorAccent as the activated or checked state for Checkboxes and RadioButtons</item> -->
+		<!-- <item name="colorControlHighlight"> controls the ripple coloring -->
+		<item name="android:textColorPrimary">@color/primary_text</item>
+		<item name="android:textColorSecondary">@color/secondary_text</item>
 		<item name="android:windowContentTransitions">true</item>
 		<item name="android:windowAllowEnterTransitionOverlap">true</item>
 		<item name="android:windowAllowReturnTransitionOverlap">true</item>
@@ -14,20 +18,16 @@
 	<style name="AppTheme.NoActionBar">
 		<item name="windowActionBar">false</item>
 		<item name="windowNoTitle">true</item>
-		<item name="android:windowContentTransitions">true</item>
-		<item name="android:windowAllowEnterTransitionOverlap">true</item>
-		<item name="android:windowAllowReturnTransitionOverlap">true</item>
 	</style>
 
 	<style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
 	<style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-	<style name="PrimaryFlatButton" parent="Theme.AppCompat.Light">
+	<style name="PrimaryFlatButton">
 		<item name="android:buttonStyle">
 			@style/Widget.AppCompat.Button.Borderless.Colored
 		</item>
-		<item name="colorAccent">@color/accent</item>
 	</style>
 
 	<style name="CollapsingToolbarLayoutExpandedTextStyle" parent="AppTheme">
