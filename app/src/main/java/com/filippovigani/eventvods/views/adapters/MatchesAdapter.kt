@@ -2,13 +2,23 @@ package com.filippovigani.eventvods.views.adapters
 
 import android.app.Activity
 import android.content.Context
+import android.databinding.DataBindingUtil
+import android.databinding.ViewDataBinding
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import com.filippovigani.eventvods.R
 import com.filippovigani.eventvods.binding.*
 import com.filippovigani.eventvods.models.*
+import com.filippovigani.eventvods.viewmodels.MatchViewModel
+import com.filippovigani.eventvods.views.MatchViewHolder
 import io.doist.recyclerviewext.sticky_headers.StickyHeaders
+import kotlinx.android.synthetic.main.match_list_content.view.*
+import java.util.*
 
 class MatchesAdapter(private val context: Context, items: List<Match>? = null) : RecyclerViewAdapter<Any>(items), StickyHeaders, StickyHeaders.ViewSetup{
+
+	private val viewModels : WeakHashMap<Match, MatchViewModel> = WeakHashMap()
 
 	override fun isStickyHeader(position: Int): Boolean {
 		return items?.get(position) !is Match
@@ -20,8 +30,18 @@ class MatchesAdapter(private val context: Context, items: List<Match>? = null) :
 	override fun teardownStickyHeaderView(stickyHeader: View?) {
 		stickyHeader?.translationZ = 0f
 	}
+	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+			MatchViewHolder(DataBindingUtil.inflate<ViewDataBinding>(LayoutInflater.from(parent.context), viewType, parent, false))
 
-	override fun getViewModel(position: Int) = items?.get(position)
+	override fun getViewModel(position: Int) : Any? {
+		val match = items?.get(position)
+		if (match !is Match) return match // header
+		if (viewModels[match] == null) {
+			viewModels[match] = MatchViewModel(match)
+		}
+		return viewModels[match]
+	}
+
 
 	override fun getItemCount() = items?.size ?: 0
 

@@ -24,25 +24,31 @@ class EventvodsRepository {
 
 		fun fetchEvents() : LiveData<List<Event>>{
 			//TODO: Consider using List instead of ObservableList
-			HttpsRequestTask({ response ->
+			HttpsRequestTask { response ->
 				val results = gson.fromJson<List<Event>>(response)
-				results.forEach({event -> eventsMap[event.slug] = event })
+				results.forEach { event -> eventsMap[event.slug] = event }
 				events.postValue(results)
-			}).execute(Endpoint.EVENTS.url)
+			}.execute(Endpoint.EVENTS.url)
 			return events
 		}
 
 		fun getEvent(eventSlug: String) : LiveData<Event>{
-			val event = MutableLiveData<Event>()
+			val event = MediatorLiveData<Event>()
 			event.postValue(eventsMap[eventSlug])
 			if (eventsMap[eventSlug]?.complete == false){
-				HttpsRequestTask({ response ->
-					val result = gson.fromJson<Event>(response)
-					eventsMap[result.slug] = result
-					result.complete = true
-					event.postValue(result)
-				}).execute(Endpoint.EVENT.url(eventSlug))
+				event.addSource(fetchEvent(eventSlug)) { event.postValue(it) }
 			}
+			return event
+		}
+
+		fun fetchEvent(eventSlug: String) : LiveData<Event>{
+			val event = MutableLiveData<Event>()
+			HttpsRequestTask { response ->
+				val result = gson.fromJson<Event>(response)
+				eventsMap[result.slug] = result
+				result.complete = true
+				event.postValue(result)
+			}.execute(Endpoint.EVENT.url(eventSlug))
 			return event
 		}
 	}

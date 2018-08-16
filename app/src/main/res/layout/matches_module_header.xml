@@ -15,7 +15,6 @@
 		android:minHeight="16dp"
 		android:layout_marginTop="@dimen/card_spacing">
 		<TextView
-			android:id="@android:id/text1"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_gravity="center_vertical"

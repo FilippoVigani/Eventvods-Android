@@ -34,53 +34,57 @@ object BindingAdapters{
 
 	@JvmStatic @BindingAdapter("src")
 	fun setImageViewResource(imageView: ImageView, src: String?) {
-		src?.let {
-			Picasso.get().load(it).into(imageView)
+		if (src == null){
+			imageView.setImageDrawable(null)
+			return
 		}
+		Picasso.get().load(src).into(imageView)
 	}
 
 	val palettes: HashMap<String, Palette> = HashMap()
 
 	@JvmStatic @BindingAdapter("eventLogo")
 	fun setEventLogo(imageView: ImageView, src: String?) {
-		src?.let {
-			val imageViewTarget = object : Target {
-				override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
-					bitmap?.let {
-
-						val paletteCached = palettes[src]
-						if (paletteCached != null){
-							val backgroundColor = paletteCached.getMutedColor(ContextCompat.getColor(imageView.context, R.color.cardview_dark_background))
+		if (src == null){
+			imageView.setImageDrawable(null)
+			return
+		}
+		val imageViewTarget = object : Target {
+			override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
+				bitmap?.let {
+					val paletteCached = palettes[src]
+					if (paletteCached != null){
+						val backgroundColor = paletteCached.getMutedColor(ContextCompat.getColor(imageView.context, R.color.cardview_dark_background))
+						imageView.setBackgroundColor(backgroundColor)
+						imageView.setImageBitmap(it)
+					} else {
+						Palette.from(it).generate { palette ->
+							palettes[src] = palette
+							val backgroundColor = palette.getMutedColor(ContextCompat.getColor(imageView.context, R.color.cardview_dark_background))
 							imageView.setBackgroundColor(backgroundColor)
 							imageView.setImageBitmap(it)
-						} else {
-							Palette.from(it).generate { palette ->
-								palettes[src] = palette
-								val backgroundColor = palette.getMutedColor(ContextCompat.getColor(imageView.context, R.color.cardview_dark_background))
-								imageView.setBackgroundColor(backgroundColor)
-								imageView.setImageBitmap(it)
-								imageView.startAnimation(AnimationUtils.loadAnimation(imageView.context, R.anim.fadein))
-							}
+							imageView.startAnimation(AnimationUtils.loadAnimation(imageView.context, R.anim.fadein))
 						}
 					}
 				}
-
-				override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
-					imageView.setImageDrawable(placeHolderDrawable)
-					(imageView.tag as Target?)?.let {
-						imageView.setBackgroundColor(ContextCompat.getColor(imageView.context, R.color.cardview_light_background))
-						Picasso.get().cancelRequest(it)
-					}
-					imageView.tag = this
-				}
-
-				override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
-					imageView.setImageDrawable(errorDrawable)
-				}
 			}
 
-			Picasso.get().load(src).into(imageViewTarget)
+			override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
+				imageView.setImageDrawable(placeHolderDrawable)
+				(imageView.tag as Target?)?.let {
+					imageView.setBackgroundColor(ContextCompat.getColor(imageView.context, R.color.cardview_light_background))
+					Picasso.get().cancelRequest(it)
+				}
+				imageView.tag = this
+			}
+
+			override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
+				imageView.setImageDrawable(errorDrawable)
+			}
 		}
+
+		Picasso.get().load(src).into(imageViewTarget)
+
 	}
 
 	@JvmStatic @BindingAdapter("isRefreshing")

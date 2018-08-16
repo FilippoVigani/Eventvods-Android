@@ -2,7 +2,7 @@ package com.filippovigani.eventvods.models
 
 import com.google.gson.annotations.SerializedName
 
-data class Match(@SerializedName("identifier") val id: String ) {
+data class Match(@SerializedName("_id") val id: String ) {
 	@SerializedName("team1Match")
 	val team1Placeholder: String? = null
 	@SerializedName("team2Match")

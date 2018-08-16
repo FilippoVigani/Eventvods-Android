@@ -5,7 +5,8 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	tools:context=".EventContentFragment">
 	<data>
-		<variable name="viewModel" type="com.filippovigani.eventvods.models.Match" />
+		<import type="android.view.View"/>
+		<variable name="viewModel" type="com.filippovigani.eventvods.viewmodels.MatchViewModel" />
 	</data>
 
 	<android.support.v7.widget.CardView
@@ -37,10 +38,10 @@
 						android:adjustViewBounds="true"
 						android:layout_column="0"
 						android:layout_weight="1"
-						android:contentDescription="@{viewModel.team1.name}"
+						android:contentDescription="@{viewModel.match.team1.name}"
 						android:padding="16dp"
 						android:scaleType="fitCenter"
-						app:src="@{viewModel.team1.icon}" />
+						app:src="@{viewModel.revealed || !viewModel.match.spoiler1 ? viewModel.match.team1.icon : null}" />
 
 					<TextView
 						android:layout_width="wrap_content"
@@ -59,10 +60,10 @@
 						android:adjustViewBounds="true"
 						android:layout_column="2"
 						android:layout_weight="1"
-						android:contentDescription="@{viewModel.team2.name}"
+						android:contentDescription="@{viewModel.match.team2.name}"
 						android:padding="16dp"
 						android:scaleType="fitCenter"
-						app:src="@{viewModel.team2.icon}" />
+						app:src="@{viewModel.revealed || !viewModel.match.spoiler2 ? viewModel.match.team2.icon : null}" />
 				</TableRow>
 				<TableRow
 					android:layout_width="match_parent"
@@ -74,7 +75,7 @@
 						android:gravity="center"
 						android:layout_height="wrap_content"
 						android:textAppearance="?android:textAppearanceMedium"
-						android:text="@{viewModel.spoiler1 ? viewModel.team1Placeholder : viewModel.team1.name}"/>
+						android:text="@{viewModel.revealed || !viewModel.match.spoiler1 ? viewModel.match.team1.name : viewModel.match.team1Placeholder }"/>
 
 					<TextView
 						android:layout_column="2"
@@ -83,7 +84,7 @@
 						android:gravity="center"
 						android:layout_height="wrap_content"
 						android:textAppearance="?android:textAppearanceMedium"
-						android:text="@{viewModel.spoiler2 ? viewModel.team2Placeholder : viewModel.team2.name}"/>
+						android:text="@{viewModel.revealed || !viewModel.match.spoiler2 ? viewModel.match.team2.name : viewModel.match.team2Placeholder }"/>
 				</TableRow>
 			</TableLayout>
 
@@ -92,7 +93,6 @@
 				android:layout_height="match_parent"
 				android:orientation="horizontal"
 				android:layout_marginTop="8dp"
-
 				>
 				<TextView
 					android:layout_width="0px"
@@ -100,12 +100,15 @@
 					android:layout_height="wrap_content"
 					android:layout_marginLeft="@dimen/text_margin"
 					android:textAllCaps="true"
-					android:text='@{"Best of " + viewModel.bestOf}'/>
+					android:text='@{"Best of " + viewModel.match.bestOf}'/>
 				<Button
+					android:id="@+id/reveal_btn"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:text="Reveal"
-					android:theme="@style/PrimaryFlatButton" />
+					android:visibility="@{!viewModel.spoilerable || viewModel.revealed ? View.INVISIBLE : View.VISIBLE}"
+					android:theme="@style/PrimaryFlatButton"
+					/>
 			</LinearLayout>
 		</LinearLayout>
 
