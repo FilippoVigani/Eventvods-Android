@@ -1,6 +1,5 @@
 package com.filippovigani.eventvods.views.adapters
 
-import android.app.Activity
 import android.content.Context
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
@@ -10,15 +9,14 @@ import android.view.ViewGroup
 import com.filippovigani.eventvods.R
 import com.filippovigani.eventvods.binding.*
 import com.filippovigani.eventvods.models.*
-import com.filippovigani.eventvods.viewmodels.MatchViewModel
-import com.filippovigani.eventvods.views.MatchViewHolder
+import com.filippovigani.eventvods.viewmodels.MatchContentViewModel
+import com.filippovigani.eventvods.views.viewholders.MatchViewHolder
 import io.doist.recyclerviewext.sticky_headers.StickyHeaders
-import kotlinx.android.synthetic.main.match_list_content.view.*
 import java.util.*
 
 class MatchesAdapter(private val context: Context, items: List<Match>? = null) : RecyclerViewAdapter<Any>(items), StickyHeaders, StickyHeaders.ViewSetup{
 
-	private val viewModels : WeakHashMap<Match, MatchViewModel> = WeakHashMap()
+	private val viewModels : WeakHashMap<Match, MatchContentViewModel> = WeakHashMap()
 
 	override fun isStickyHeader(position: Int): Boolean {
 		return items?.get(position) !is Match
@@ -37,7 +35,7 @@ class MatchesAdapter(private val context: Context, items: List<Match>? = null) :
 		val match = items?.get(position)
 		if (match !is Match) return match // header
 		if (viewModels[match] == null) {
-			viewModels[match] = MatchViewModel(match)
+			viewModels[match] = MatchContentViewModel(match)
 		}
 		return viewModels[match]
 	}

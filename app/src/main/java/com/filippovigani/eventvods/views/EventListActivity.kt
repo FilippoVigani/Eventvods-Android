@@ -27,7 +27,7 @@ class EventListActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListe
 		event_list.adapter = EventsAdapter(this)
 
 		swipe_refresh_layout.setOnRefreshListener(this)
-		swipe_refresh_layout.setColorSchemeResources(R.color.primary, R.color.accent)
+		swipe_refresh_layout.setColorSchemeResources(theme.getAttribute(R.attr.colorPrimary), theme.getAttribute(R.attr.colorAccent))
 	}
 
 	override fun onRefresh() {

@@ -5,7 +5,7 @@ import android.databinding.ObservableBoolean
 import com.filippovigani.eventvods.BR
 import com.filippovigani.eventvods.models.Match
 
-class MatchViewModel(val match: Match) : ViewModel(){
+class MatchContentViewModel(val match: Match) : ViewModel(){
 	var revealed: ObservableBoolean = ObservableBoolean(false)
 
 	val spoilerable

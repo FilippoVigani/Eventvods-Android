@@ -1,7 +1,11 @@
 package com.filippovigani.eventvods.views
 
+import android.content.Context
+import android.content.res.Resources
 import com.filippovigani.eventvods.R
-import com.filippovigani.eventvods.models.Game
+import android.util.TypedValue
+
+
 
 object ThemeUtils {
 	fun getGameTheme(gameSlug: String?) : Int{
@@ -15,4 +19,10 @@ object ThemeUtils {
 			else -> R.style.AppTheme_NoActionBar
 		}
 	}
+}
+
+fun Resources.Theme.getAttribute(attributeId: Int): Int {
+	val typedValue = TypedValue()
+	this.resolveAttribute(attributeId, typedValue, true)
+	return typedValue.resourceId
 }

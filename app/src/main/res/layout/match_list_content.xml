@@ -6,7 +6,7 @@
 	tools:context=".EventContentFragment">
 	<data>
 		<import type="android.view.View"/>
-		<variable name="viewModel" type="com.filippovigani.eventvods.viewmodels.MatchViewModel" />
+		<variable name="viewModel" type="com.filippovigani.eventvods.viewmodels.MatchContentViewModel" />
 	</data>
 
 	<android.support.v7.widget.CardView

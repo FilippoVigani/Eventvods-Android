@@ -15,7 +15,7 @@ class EventListViewModel : ViewModel() {
 
 	init {
 		loadEvents()
-		loading.addSource(events, {loading.postValue(false)})
+		loading.addSource(events) {loading.postValue(false)}
 	}
 
 	fun loadEvents(){

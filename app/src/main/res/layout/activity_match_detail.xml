@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	tools:context=".views.MatchDetailActivity">
+	<data>
+		<variable
+			name="viewModel"
+			type="com.filippovigani.eventvods.viewmodels.MatchDetailViewModel" />
+	</data>
+	<android.support.design.widget.CoordinatorLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:fitsSystemWindows="true"
+		tools:ignore="MergeRootFrame">
+
+		<android.support.design.widget.AppBarLayout
+			android:id="@+id/app_bar"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+			<android.support.v7.widget.Toolbar
+				android:id="@+id/detail_toolbar"
+				android:layout_width="match_parent"
+				android:layout_height="?android:attr/actionBarSize"
+				app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+				app:title='@{viewModel.match.team1.name + " vs " + viewModel.match.team2.name}'
+				/>
+
+		</android.support.design.widget.AppBarLayout>
+
+		<android.support.constraint.ConstraintLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="@{viewModel.match.team1.name}"/>
+
+		</android.support.constraint.ConstraintLayout>
+
+	</android.support.design.widget.CoordinatorLayout>
+</layout>

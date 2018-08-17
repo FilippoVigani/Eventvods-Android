@@ -1,19 +1,29 @@
 package com.filippovigani.eventvods.viewmodels
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
 import com.filippovigani.eventvods.models.Event
 import com.filippovigani.eventvods.services.EventvodsRepository
 import android.app.Application
+import android.arch.lifecycle.*
 import android.support.annotation.NonNull
 
 
 
-class EventDetailViewModel(eventSlug: String) : ViewModel() {
+class EventDetailViewModel(private val eventSlug: String) : ViewModel() {
 
 	var event: LiveData<Event> = EventvodsRepository.getEvent(eventSlug)
+	val loading: MediatorLiveData<Boolean> = MediatorLiveData()
+
+	init {
+		loading.addSource(event) {loading.postValue(false)}
+		loading.postValue(true)
+	}
+
+	fun reloadEvent(){
+		loading.removeSource(event)
+		loading.postValue(true)
+		event = EventvodsRepository.fetchEvent(eventSlug)
+		loading.addSource(event) {loading.postValue(false)}
+	}
 
 	class Factory(private val eventSlug: String) : ViewModelProvider.NewInstanceFactory() {
 
