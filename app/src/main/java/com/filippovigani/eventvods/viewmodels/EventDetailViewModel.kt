@@ -10,19 +10,18 @@ import android.support.annotation.NonNull
 
 class EventDetailViewModel(private val eventSlug: String) : ViewModel() {
 
-	var event: LiveData<Event> = EventvodsRepository.getEvent(eventSlug)
+	lateinit var event: LiveData<Event>
 	val loading: MediatorLiveData<Boolean> = MediatorLiveData()
 
 	init {
-		loading.addSource(event) {loading.postValue(false)}
-		loading.postValue(true)
+		loadEvent()
 	}
 
-	fun reloadEvent(){
-		loading.removeSource(event)
+	fun loadEvent(forceFetch: Boolean = false){
+		if (::event.isInitialized) loading.removeSource(event)
 		loading.postValue(true)
-		event = EventvodsRepository.fetchEvent(eventSlug)
-		loading.addSource(event) {loading.postValue(false)}
+		event = if(forceFetch) EventvodsRepository.fetchEvent(eventSlug) else EventvodsRepository.getEvent(eventSlug)
+		loading.addSource(event) { it -> if (it?.complete == true) loading.postValue(false)}
 	}
 
 	class Factory(private val eventSlug: String) : ViewModelProvider.NewInstanceFactory() {

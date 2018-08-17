@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.view.MenuItem
 import com.filippovigani.eventvods.R
 import com.filippovigani.eventvods.databinding.ActivityMatchDetailBinding
 import com.filippovigani.eventvods.viewmodels.EventDetailViewModel
@@ -27,6 +28,15 @@ class MatchDetailActivity : AppCompatActivity() {
 
 		supportActionBar?.setDisplayHomeAsUpEnabled(true)
 	}
+
+	override fun onOptionsItemSelected(item: MenuItem) =
+		when (item.itemId) {
+			android.R.id.home -> {
+				finishAfterTransition()
+				true
+			}
+			else -> super.onOptionsItemSelected(item)
+		}
 
 	companion object {
 		const val ARG_MATCH_ID = "match_id"
