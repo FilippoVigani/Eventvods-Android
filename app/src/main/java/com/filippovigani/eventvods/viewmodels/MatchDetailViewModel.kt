@@ -10,6 +10,8 @@ class MatchDetailViewModel(matchId : String) : ViewModel(){
 
 	val match: LiveData<Match> = EventvodsRepository.getMatch(matchId)
 
+	var currentVOD: Match.Game.VOD? = null
+
 	class Factory(private val matchId: String) : ViewModelProvider.NewInstanceFactory() {
 
 		@Suppress("UNCHECKED_CAST")

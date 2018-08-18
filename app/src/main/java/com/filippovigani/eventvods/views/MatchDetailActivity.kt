@@ -7,14 +7,20 @@ import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import com.filippovigani.eventvods.BuildConfig
 import com.filippovigani.eventvods.R
 import com.filippovigani.eventvods.databinding.ActivityMatchDetailBinding
 import com.filippovigani.eventvods.viewmodels.MatchDetailViewModel
 import com.filippovigani.eventvods.views.adapters.MatchGamePagerAdapter
-import kotlinx.android.synthetic.main.activity_event_detail.*
+import com.google.android.youtube.player.YouTubeInitializationResult
+import com.google.android.youtube.player.YouTubePlayer
+import com.google.android.youtube.player.YouTubePlayerSupportFragment
+import kotlinx.android.synthetic.main.activity_match_detail.*
 import kotlinx.android.synthetic.main.activity_match_detail.view.*
 
-class MatchDetailActivity : AppCompatActivity() {
+class MatchDetailActivity : AppCompatActivity(), YouTubePlayer.OnInitializedListener {
+
+	private var player: YouTubePlayer? = null
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -30,9 +36,15 @@ class MatchDetailActivity : AppCompatActivity() {
 		val sectionsPagerAdapter = MatchGamePagerAdapter(supportFragmentManager)
 		binding.root.gamesViewPager.adapter = sectionsPagerAdapter
 
-		binding.viewModel?.match?.observe(this, Observer{match ->
+		val playerFragment = youtubePlayerFragment as? YouTubePlayerSupportFragment ?: return
+
+		playerFragment.initialize(BuildConfig.YoutubeAPIKey, this)
+
+		binding.viewModel?.match?.observe(this, Observer { match ->
 			sectionsPagerAdapter.games = match?.games
-			if (match?.games != null && match.games.size <= 5){
+			binding?.viewModel?.currentVOD = match?.games?.get(0)?.youtube
+			playCurrentVOD()
+			if (match?.games != null && match.games.size <= 5) {
 				binding.root.gamesTabLayout.tabMode = TabLayout.MODE_FIXED
 			}
 		})
@@ -41,6 +53,26 @@ class MatchDetailActivity : AppCompatActivity() {
 
 		supportActionBar?.setDisplayHomeAsUpEnabled(true)
 	}
+
+	private fun playCurrentVOD(){
+		val vod = ViewModelProviders.of(this).get(MatchDetailViewModel::class.java).currentVOD
+		player?.apply {
+			loadVideo(vod?.id)
+		}
+	}
+
+	override fun onInitializationSuccess(provider: YouTubePlayer.Provider?, player: YouTubePlayer?, wasRestored: Boolean) {
+		if (!wasRestored) {
+			this.player = player
+			player?.setPlayerStyle(YouTubePlayer.PlayerStyle.MINIMAL)
+		}
+		playCurrentVOD()
+	}
+
+	override fun onInitializationFailure(provider: YouTubePlayer.Provider?, player: YouTubeInitializationResult?) {
+		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+	}
+
 
 	override fun onOptionsItemSelected(item: MenuItem) =
 		when (item.itemId) {

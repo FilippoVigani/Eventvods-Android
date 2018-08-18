@@ -1,6 +1,9 @@
 package com.filippovigani.eventvods.models
 
 import com.google.gson.annotations.SerializedName
+import android.net.UrlQuerySanitizer
+
+
 
 data class Match(@SerializedName("_id") val id: String ) {
 	@SerializedName("team1Match")
@@ -27,6 +30,10 @@ data class Match(@SerializedName("_id") val id: String ) {
 		class VOD{
 			val gameStart: String? = null
 			val picksBans: String? = null
+
+
+			val id: String?
+				get() = UrlQuerySanitizer(gameStart).getValue("v")
 		}
 	}
 }

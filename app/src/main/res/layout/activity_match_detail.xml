@@ -3,11 +3,14 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	tools:context=".views.MatchDetailActivity">
+
 	<data>
+
 		<variable
 			name="viewModel"
 			type="com.filippovigani.eventvods.viewmodels.MatchDetailViewModel" />
 	</data>
+
 	<android.support.design.widget.CoordinatorLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
@@ -25,34 +28,41 @@
 				android:layout_width="match_parent"
 				android:layout_height="?android:attr/actionBarSize"
 				app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-				app:title='@{viewModel.match.team1.name + " vs " + viewModel.match.team2.name}'
-				/>
+				app:title='@{viewModel.match.team1.name + " vs " + viewModel.match.team2.name}' />
 
 		</android.support.design.widget.AppBarLayout>
 
-		<android.support.constraint.ConstraintLayout
+		<LinearLayout android:orientation="vertical"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+			<fragment
+				android:id="@+id/youtubePlayerFragment"
+				android:name="com.google.android.youtube.player.YouTubePlayerSupportFragment"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="0"
+				app:layout_constraintTop_toTopOf="parent" />
+
 			<android.support.v4.view.ViewPager
 				android:id="@+id/gamesViewPager"
 				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				app:layout_constraintTop_toTopOf="parent"
-				app:layout_behavior="@string/appbar_scrolling_view_behavior">
+				android:layout_height="0dp"
+				android:layout_weight="1">
+
 				<android.support.design.widget.TabLayout
 					android:id="@+id/gamesTabLayout"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:layout_gravity="top"
-					app:tabMode="scrollable"
 					app:tabGravity="fill"
+					app:tabMaxWidth="0dp"
 					app:tabMinWidth="@dimen/game_tab_min_width"
-					app:tabMaxWidth="0dp"/>
+					app:tabMode="scrollable" />
 			</android.support.v4.view.ViewPager>
 
-		</android.support.constraint.ConstraintLayout>
+		</LinearLayout>
 
 	</android.support.design.widget.CoordinatorLayout>
 </layout>

@@ -4,10 +4,13 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.provider.SyncStateContract
 import android.support.design.widget.Snackbar
 import android.support.design.widget.TabLayout
+import android.support.v4.app.FragmentActivity
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.MenuItem
 import com.filippovigani.eventvods.R
 import com.filippovigani.eventvods.databinding.ActivityEventDetailBinding
@@ -16,6 +19,11 @@ import com.filippovigani.eventvods.views.adapters.EventSectionsPagerAdapter
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_event_detail.*
 import kotlinx.android.synthetic.main.activity_event_detail.view.*
+import com.google.android.youtube.player.internal.e
+import com.google.android.youtube.player.YouTubeInitializationResult
+import com.google.android.youtube.player.YouTubePlayer
+import com.google.android.youtube.player.YouTubePlayerSupportFragment
+
 
 /**
  * An activity representing a single Event detail screen. This
@@ -44,7 +52,7 @@ class EventDetailActivity : AppCompatActivity(){
 
 		binding.viewModel?.event?.observe(this, Observer{event ->
 			sectionsPagerAdapter.sections = event?.sections
-			if (event?.sections != null && event?.sections.size <= 4){
+			if (event?.sections != null && event.sections.size <= 4){
 				binding.root.sectionsTabLayout.tabMode = TabLayout.MODE_FIXED
 			}
 		})
