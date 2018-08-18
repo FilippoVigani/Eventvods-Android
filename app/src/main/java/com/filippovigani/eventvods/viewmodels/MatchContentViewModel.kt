@@ -2,10 +2,10 @@ package com.filippovigani.eventvods.viewmodels
 
 import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableBoolean
-import com.filippovigani.eventvods.BR
 import com.filippovigani.eventvods.models.Match
+import com.filippovigani.eventvods.models.Event
 
-class MatchContentViewModel(val match: Match) : ViewModel(){
+class MatchContentViewModel(val event: Event?, val match: Match) : ViewModel(){
 	var revealed: ObservableBoolean = ObservableBoolean(false)
 
 	val spoilerable

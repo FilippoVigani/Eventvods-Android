@@ -17,6 +17,8 @@ import java.util.*
 class MatchesAdapter(private val context: Context, items: List<Match>? = null) : RecyclerViewAdapter<Any>(items), StickyHeaders, StickyHeaders.ViewSetup{
 
 	private val viewModels : WeakHashMap<Match, MatchContentViewModel> = WeakHashMap()
+	var event: Event? = null
+
 
 	override fun isStickyHeader(position: Int): Boolean {
 		return items?.get(position) !is Match
@@ -35,7 +37,7 @@ class MatchesAdapter(private val context: Context, items: List<Match>? = null) :
 		val match = items?.get(position)
 		if (match !is Match) return match // header
 		if (viewModels[match] == null) {
-			viewModels[match] = MatchContentViewModel(match)
+			viewModels[match] = MatchContentViewModel(event, match)
 		}
 		return viewModels[match]
 	}

@@ -14,4 +14,19 @@ data class Match(@SerializedName("_id") val id: String ) {
 
 	val team1: Team? = null
 	val team2: Team? = null
+
+	@SerializedName("data")
+	val games: List<Game>? = null
+
+	data class Game(@SerializedName("_id") val id: String ){
+		val youtube: VOD? = null
+		val twitch: VOD? = null
+
+		val links: List<String>? = null
+
+		class VOD{
+			val gameStart: String? = null
+			val picksBans: String? = null
+		}
+	}
 }

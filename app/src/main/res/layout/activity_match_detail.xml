@@ -32,11 +32,25 @@
 
 		<android.support.constraint.ConstraintLayout
 			android:layout_width="match_parent"
-			android:layout_height="match_parent">
-			<TextView
+			android:layout_height="match_parent"
+			app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+			<android.support.v4.view.ViewPager
+				android:id="@+id/gamesViewPager"
 				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:text="@{viewModel.match.team1.name}"/>
+				android:layout_height="match_parent"
+				app:layout_constraintTop_toTopOf="parent"
+				app:layout_behavior="@string/appbar_scrolling_view_behavior">
+				<android.support.design.widget.TabLayout
+					android:id="@+id/gamesTabLayout"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_gravity="top"
+					app:tabMode="scrollable"
+					app:tabGravity="fill"
+					app:tabMinWidth="@dimen/game_tab_min_width"
+					app:tabMaxWidth="0dp"/>
+			</android.support.v4.view.ViewPager>
 
 		</android.support.constraint.ConstraintLayout>
 

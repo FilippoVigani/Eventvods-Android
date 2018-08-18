@@ -14,14 +14,18 @@
 		android:background="?android:colorBackground"
 		android:minHeight="16dp"
 		android:layout_marginTop="@dimen/card_spacing">
+
 		<TextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_gravity="center_vertical"
 			android:gravity="center"
 			android:padding="8dp"
-			android:textAppearance="?android:textAppearanceListItem"
-			android:text="@{viewModel.title}" />
+			android:text="@{viewModel.title}"
+			android:textColor="?android:attr/colorPrimary"
+			android:textAllCaps="true"
+			android:textSize="15sp"
+			android:layout_marginStart="4dp"/>
 
 	</FrameLayout>
 </layout>

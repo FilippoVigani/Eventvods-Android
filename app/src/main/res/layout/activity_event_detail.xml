@@ -27,6 +27,7 @@
 				app:expandedTitleTextAppearance="@style/CollapsingToolbarLayoutExpandedTextStyle"
 				app:scrimAnimationDuration="200"
 				app:layout_scrollFlags="scroll|exitUntilCollapsed"
+				app:title="@{viewModel.event.name}"
 				app:toolbarId="@+id/toolbar">
 
 				<ImageView
@@ -44,7 +45,8 @@
 					android:layout_width="match_parent"
 					android:layout_height="?android:attr/actionBarSize"
 					app:layout_collapseMode="pin"
-					app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+					app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+					/>
 
 			</android.support.design.widget.CollapsingToolbarLayout>
 
@@ -62,10 +64,13 @@
 				android:layout_height="match_parent"
 				app:layout_behavior="@string/appbar_scrolling_view_behavior">
 				<android.support.design.widget.TabLayout
+					android:id="@+id/sectionsTabLayout"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:layout_gravity="top"
-					app:tabMode="scrollable"/>
+					app:tabMode="scrollable"
+					app:tabGravity="fill"
+					app:tabMinWidth="@dimen/tab_min_width" />
 			</android.support.v4.view.ViewPager>
 		</android.support.v4.widget.SwipeRefreshLayout>
 

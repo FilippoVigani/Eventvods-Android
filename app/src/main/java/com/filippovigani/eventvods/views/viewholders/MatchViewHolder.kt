@@ -31,6 +31,7 @@ class MatchViewHolder(binding: ViewDataBinding) : RecyclerViewViewHolder(binding
 				if (matchContent.spoilerable && !matchContent.revealed.get()) return matchContent.reveal()
 				val intent = Intent(itemView.context, MatchDetailActivity::class.java).apply {
 					putExtra(MatchDetailActivity.ARG_MATCH_ID, matchContent.match.id)
+					putExtra(MatchDetailActivity.ARG_GAME_SLUG, matchContent.event?.game?.slug)
 				}
 				itemView.context.startActivity(intent)
 			}
