@@ -1,17 +1,14 @@
 package com.filippovigani.eventvods.services
 
 import android.arch.lifecycle.LiveData
-import com.filippovigani.eventvods.models.Event
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import android.arch.lifecycle.MediatorLiveData
 import android.arch.lifecycle.MutableLiveData
-import android.databinding.ObservableList
+import com.filippovigani.eventvods.models.Event
+import com.filippovigani.eventvods.models.Match
 import com.filippovigani.eventvods.networking.Endpoint
 import com.filippovigani.eventvods.networking.HttpsRequestTask
-import android.arch.lifecycle.MediatorLiveData
-import android.arch.lifecycle.Observer
-import android.databinding.ObservableArrayList
-import com.filippovigani.eventvods.models.Match
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 
 class EventvodsRepository {

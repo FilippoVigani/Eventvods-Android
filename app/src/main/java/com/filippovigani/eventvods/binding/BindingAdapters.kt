@@ -6,14 +6,12 @@ import android.graphics.drawable.Drawable
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.graphics.Palette
-import android.support.v7.widget.RecyclerView
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import com.filippovigani.eventvods.R
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
 import java.lang.Exception
-import android.view.animation.AnimationUtils
-
 
 
 object BindingAdapters{

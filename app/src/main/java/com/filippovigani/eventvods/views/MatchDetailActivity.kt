@@ -3,15 +3,12 @@ package com.filippovigani.eventvods.views
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.design.widget.TabLayout
+import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.filippovigani.eventvods.R
 import com.filippovigani.eventvods.databinding.ActivityMatchDetailBinding
-import com.filippovigani.eventvods.viewmodels.EventDetailViewModel
-import com.filippovigani.eventvods.viewmodels.MatchContentViewModel
 import com.filippovigani.eventvods.viewmodels.MatchDetailViewModel
 import com.filippovigani.eventvods.views.adapters.MatchGamePagerAdapter
 import kotlinx.android.synthetic.main.activity_event_detail.*

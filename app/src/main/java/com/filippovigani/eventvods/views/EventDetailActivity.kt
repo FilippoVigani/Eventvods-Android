@@ -7,16 +7,11 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.design.widget.TabLayout
 import android.support.v4.view.ViewPager
-import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
-import android.util.TypedValue
 import android.view.MenuItem
 import com.filippovigani.eventvods.R
-import com.filippovigani.eventvods.R.id.event_image
-import com.filippovigani.eventvods.R.id.swipe_refresh_layout
 import com.filippovigani.eventvods.databinding.ActivityEventDetailBinding
 import com.filippovigani.eventvods.viewmodels.EventDetailViewModel
-import com.filippovigani.eventvods.views.ThemeUtils
 import com.filippovigani.eventvods.views.adapters.EventSectionsPagerAdapter
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_event_detail.*
@@ -31,8 +26,8 @@ import kotlinx.android.synthetic.main.activity_event_detail.view.*
 class EventDetailActivity : AppCompatActivity(){
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		val gameSlug = intent.getStringExtra(ARG_GAME_SLUG) //?: savedInstanceState?.getString(ARG_GAME_SLUG)
-		val eventSlug = intent.getStringExtra(ARG_EVENT_SLUG) //?: savedInstanceState?.getString(ARG_EVENT_SLUG)
+		val gameSlug = intent.getStringExtra(ARG_GAME_SLUG)
+		val eventSlug = intent.getStringExtra(ARG_EVENT_SLUG)
 		val bgColor = intent.getIntExtra(ARG_EVENT_LOGO_BACKGROUND, R.color.cardview_dark_background)
 		val eventLogoUrl = intent.getStringExtra(ARG_EVENT_LOGO_URL)
 

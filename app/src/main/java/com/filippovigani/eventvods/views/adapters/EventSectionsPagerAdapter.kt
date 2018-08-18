@@ -1,12 +1,9 @@
 package com.filippovigani.eventvods.views.adapters
 
-import android.arch.lifecycle.ViewModelProviders
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.app.FragmentStatePagerAdapter
 import com.filippovigani.eventvods.models.Event
-import com.filippovigani.eventvods.viewmodels.EventSectionViewModel
 import com.filippovigani.eventvods.views.EventSectionFragment
 
 class EventSectionsPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) { //FragmentStatePagerAdapter

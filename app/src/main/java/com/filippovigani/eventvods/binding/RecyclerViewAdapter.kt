@@ -1,13 +1,11 @@
 package com.filippovigani.eventvods.binding
 
-import android.app.Activity
 import android.databinding.DataBindingUtil
-import android.databinding.ObservableArrayList
+import android.databinding.ObservableList
 import android.databinding.ViewDataBinding
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.databinding.ObservableList
 import java.lang.ref.WeakReference
 
 abstract class RecyclerViewAdapter<T>(items: List<T>? = null) : RecyclerView.Adapter<RecyclerViewViewHolder>() {

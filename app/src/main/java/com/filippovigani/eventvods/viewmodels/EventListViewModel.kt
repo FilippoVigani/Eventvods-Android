@@ -2,10 +2,7 @@ package com.filippovigani.eventvods.viewmodels
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MediatorLiveData
-import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import android.databinding.ObservableArrayList
-import android.databinding.ObservableList
 import com.filippovigani.eventvods.models.Event
 import com.filippovigani.eventvods.services.EventvodsRepository
 

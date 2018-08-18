@@ -4,9 +4,6 @@ import android.os.AsyncTask
 import java.io.InputStream
 import java.net.URL
 import java.net.URLConnection
-import java.net.HttpURLConnection.HTTP_OK
-import java.net.HttpURLConnection.setFollowRedirects
-
 
 
 class HttpsRequestTask(private val callback: (String) -> Unit) : AsyncTask<URL, Unit, Unit>() {

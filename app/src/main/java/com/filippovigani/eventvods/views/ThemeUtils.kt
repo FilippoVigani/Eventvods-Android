@@ -1,10 +1,8 @@
 package com.filippovigani.eventvods.views
 
-import android.content.Context
 import android.content.res.Resources
-import com.filippovigani.eventvods.R
 import android.util.TypedValue
-
+import com.filippovigani.eventvods.R
 
 
 object ThemeUtils {

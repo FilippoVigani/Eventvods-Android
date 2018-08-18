@@ -1,10 +1,8 @@
 package com.filippovigani.eventvods.viewmodels
 
-import android.arch.lifecycle.MediatorLiveData
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import com.filippovigani.eventvods.models.Event
-import com.filippovigani.eventvods.models.Match
 
 class EventSectionViewModel(private val section: Event.Section) : ViewModel() {
 

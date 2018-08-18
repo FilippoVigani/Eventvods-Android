@@ -7,8 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.filippovigani.eventvods.R
-import com.filippovigani.eventvods.binding.*
-import com.filippovigani.eventvods.models.*
+import com.filippovigani.eventvods.binding.RecyclerViewAdapter
+import com.filippovigani.eventvods.binding.RecyclerViewViewHolder
+import com.filippovigani.eventvods.models.Event
+import com.filippovigani.eventvods.models.Match
 import com.filippovigani.eventvods.viewmodels.MatchContentViewModel
 import com.filippovigani.eventvods.views.viewholders.MatchViewHolder
 import io.doist.recyclerviewext.sticky_headers.StickyHeaders

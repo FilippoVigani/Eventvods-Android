@@ -4,9 +4,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.PagerAdapter
-import com.filippovigani.eventvods.R
 import com.filippovigani.eventvods.models.Match
-import com.filippovigani.eventvods.views.EventSectionFragment
 import com.filippovigani.eventvods.views.MatchGameFragment
 
 class MatchGamePagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) { //FragmentStatePagerAdapter

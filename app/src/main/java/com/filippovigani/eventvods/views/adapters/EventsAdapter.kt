@@ -2,28 +2,21 @@ package com.filippovigani.eventvods.views.adapters
 
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
 import android.support.v4.app.ActivityOptionsCompat
+import android.support.v4.util.Pair
 import android.support.v4.view.ViewCompat
 import android.view.View
-import com.filippovigani.eventvods.views.EventDetailActivity
-import com.filippovigani.eventvods.views.EventListActivity
 import com.filippovigani.eventvods.R
 import com.filippovigani.eventvods.binding.RecyclerViewAdapter
 import com.filippovigani.eventvods.binding.RecyclerViewViewHolder
 import com.filippovigani.eventvods.models.Event
-import com.filippovigani.eventvods.viewmodels.EventListViewModel
 import com.filippovigani.eventvods.viewmodels.EventContentViewModel
-import com.squareup.picasso.Picasso
-import com.squareup.picasso.Target
+import com.filippovigani.eventvods.viewmodels.EventListViewModel
+import com.filippovigani.eventvods.views.EventDetailActivity
+import com.filippovigani.eventvods.views.EventListActivity
 import kotlinx.android.synthetic.main.event_list_content.*
 import kotlinx.android.synthetic.main.event_list_content.view.*
-import android.graphics.drawable.Drawable
-import android.graphics.Bitmap
-import android.support.v4.content.ContextCompat
-import android.support.v7.graphics.Palette
-import java.lang.Exception
-import android.graphics.drawable.ColorDrawable
-import android.support.v4.util.Pair
 
 
 class EventsAdapter(private val parentActivity: EventListActivity, items: List<Event>? = null) : RecyclerViewAdapter<Event>(items) {

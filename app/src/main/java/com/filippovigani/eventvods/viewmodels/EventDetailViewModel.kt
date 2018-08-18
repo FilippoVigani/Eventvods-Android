@@ -1,11 +1,11 @@
 package com.filippovigani.eventvods.viewmodels
 
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MediatorLiveData
+import android.arch.lifecycle.ViewModel
+import android.arch.lifecycle.ViewModelProvider
 import com.filippovigani.eventvods.models.Event
 import com.filippovigani.eventvods.services.EventvodsRepository
-import android.app.Application
-import android.arch.lifecycle.*
-import android.support.annotation.NonNull
-
 
 
 class EventDetailViewModel(private val eventSlug: String) : ViewModel() {
