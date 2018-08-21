@@ -5,7 +5,7 @@
 	tools:context=".views.MatchDetailActivity">
 
 	<data>
-
+		<import type="com.filippovigani.eventvods.R"/>
 		<variable
 			name="viewModel"
 			type="com.filippovigani.eventvods.viewmodels.MatchDetailViewModel" />
@@ -106,7 +106,7 @@
 					android:adjustViewBounds="true"
 					app:srcCompat="@drawable/ic_left" />
 				<ImageButton
-					android:id="@+id/play"
+					android:id="@+id/togglePlaybackButton"
 					android:layout_width="@dimen/player_button_big_size"
 					android:layout_height="@dimen/player_button_big_size"
 					android:padding="@dimen/player_button_padding"
@@ -115,7 +115,7 @@
 					android:contentDescription="@string/player_play"
 					android:scaleType="fitCenter"
 					android:adjustViewBounds="true"
-					app:srcCompat="@drawable/ic_play_circle_filled" />
+					app:srcCompat="@{viewModel.isPlaying ? @drawable/ic_pause_circle_filled : @drawable/ic_play_circle_filled}" />
 				<ImageButton
 					android:id="@+id/skipForward1"
 					android:layout_width="@dimen/player_button_size"

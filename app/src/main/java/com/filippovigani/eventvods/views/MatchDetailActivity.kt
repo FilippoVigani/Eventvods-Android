@@ -1,36 +1,43 @@
 package com.filippovigani.eventvods.views
 
-import android.app.Activity
-import android.app.Fragment
+//import com.google.android.youtube.player.YouTubeInitializationResult
+//import com.google.android.youtube.player.YouTubePlayer
+//import com.google.android.youtube.player.YouTubePlayerSupportFragment
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.pm.ActivityInfo
+import android.content.res.Configuration
+import android.databinding.BindingMethod
+import android.databinding.BindingMethods
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.TabLayout
+import android.support.v4.app.FragmentActivity
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.MenuItem
+import android.view.View
+import android.widget.ImageView
 import com.filippovigani.eventvods.R
 import com.filippovigani.eventvods.databinding.ActivityMatchDetailBinding
 import com.filippovigani.eventvods.viewmodels.MatchDetailViewModel
 import com.filippovigani.eventvods.views.adapters.MatchGamePagerAdapter
-//import com.google.android.youtube.player.YouTubeInitializationResult
-//import com.google.android.youtube.player.YouTubePlayer
-//import com.google.android.youtube.player.YouTubePlayerSupportFragment
-import kotlinx.android.synthetic.main.activity_match_detail.*
-import kotlinx.android.synthetic.main.activity_match_detail.view.*
+import com.filippovigani.eventvods.views.utils.FullScreenHelper
 import com.filippovigani.eventvods.views.utils.ThemeUtils
+import com.pierfrancescosoffritti.androidyoutubeplayer.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.player.listeners.AbstractYouTubePlayerListener
-import android.content.pm.ActivityInfo
-import android.content.res.Configuration
-import android.support.v4.app.FragmentActivity
-import android.util.Log
-import android.view.View
-import android.view.ViewGroup
-import com.filippovigani.eventvods.views.utils.FullScreenHelper
-import com.pierfrancescosoffritti.androidyoutubeplayer.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.player.listeners.YouTubePlayerFullScreenListener
+import kotlinx.android.synthetic.main.activity_match_detail.*
+import kotlinx.android.synthetic.main.activity_match_detail.view.*
 
+@BindingMethods(
+		BindingMethod(
+				type = ImageView::class,
+				attribute = "app:srcCompat",
+				method = "setImageDrawable"
+		)
+)
 class MatchDetailActivity : AppCompatActivity(), View.OnClickListener {
 
 	private var player: YouTubePlayer? = null
@@ -40,7 +47,6 @@ class MatchDetailActivity : AppCompatActivity(), View.OnClickListener {
 		super.onCreate(savedInstanceState)
 		val gameSlug = intent.getStringExtra(ARG_GAME_SLUG)
 		val matchId = intent.getStringExtra(MatchDetailActivity.ARG_MATCH_ID)
-
 
 		setTheme(ThemeUtils.getGameTheme(gameSlug))
 
@@ -72,11 +78,12 @@ class MatchDetailActivity : AppCompatActivity(), View.OnClickListener {
 	}
 
 	private fun initPlayerControls() {
-		listOf(skipForward1, skipForward2, skipForward3, skipBack1, skipBack2, skipBack3).forEach {it.setOnClickListener(this)}
+		listOf(togglePlaybackButton, skipForward1, skipForward2, skipForward3, skipBack1, skipBack2, skipBack3).forEach {it.setOnClickListener(this)}
 	}
 
 	override fun onClick(v: View?) {
 		when(v){
+			togglePlaybackButton -> togglePlayback()
 			skipBack1 -> skip(-5)
 			skipBack2 -> skip(-60)
 			skipBack3 -> skip(-300)
@@ -89,6 +96,12 @@ class MatchDetailActivity : AppCompatActivity(), View.OnClickListener {
 	private fun skip(seconds: Int){
 		val currentTime = ViewModelProviders.of(this).get(MatchDetailViewModel::class.java).playbackTime
 		player?.seekTo(currentTime + seconds)
+	}
+
+	private fun togglePlayback(){
+		val isPlaying = ViewModelProviders.of(this).get(MatchDetailViewModel::class.java).isPlaying.get()
+		if (isPlaying) player?.pause()
+		else player?.play()
 	}
 
 	private fun initYouTubePlayerView() {
@@ -140,6 +153,13 @@ class MatchDetailActivity : AppCompatActivity(), View.OnClickListener {
 
 		override fun onCurrentSecond(second: Float) {
 			viewModel.playbackTime = second
+		}
+
+		override fun onStateChange(state: PlayerConstants.PlayerState) {
+			when(state){
+				PlayerConstants.PlayerState.PLAYING -> viewModel.isPlaying.set(true)
+				PlayerConstants.PlayerState.PAUSED -> viewModel.isPlaying.set(false)
+			}
 		}
 	}
 
