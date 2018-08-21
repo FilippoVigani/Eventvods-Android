@@ -15,6 +15,7 @@
 			android:name=".views.EventListActivity"
 			android:label="@string/title_event_list"
 			android:launchMode="singleTop"
+			android:screenOrientation="portrait"
 			>
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
@@ -26,6 +27,7 @@
 			android:name=".views.EventDetailActivity"
 			android:label="@string/title_event_detail"
 			android:parentActivityName=".views.EventListActivity"
+			android:screenOrientation="portrait"
 			>
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
@@ -35,6 +37,7 @@
 			android:label="@string/title_match_detail"
 			android:parentActivityName=".views.EventDetailActivity"
 			android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
+			android:screenOrientation="portrait"
 			>
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"

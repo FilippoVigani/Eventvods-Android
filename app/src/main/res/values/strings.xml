@@ -101,4 +101,10 @@
 	<string name="draft">Draft</string>
 	<string name="error_video">There was an error initializing the Youtube video player (%1$s)</string>
 	<string name="player_play">Play</string>
+	<string name="skip_5_seconds">Skip 5 seconds</string>
+	<string name="skip_1_minute">Skip 1 minute</string>
+	<string name="skip_5_minutes">Skip 5 minutes</string>
+	<string name="skip_back_5_seconds">Skip back 5 seconds</string>
+	<string name="skip_back_1_minute">Skip back 1 minute</string>
+	<string name="skip_back_5_minutes">Skip back 5 minutes</string>
 </resources>

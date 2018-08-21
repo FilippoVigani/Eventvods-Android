@@ -24,11 +24,14 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.player.listeners.Abstract
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.support.v4.app.FragmentActivity
+import android.util.Log
+import android.view.View
 import android.view.ViewGroup
 import com.filippovigani.eventvods.views.utils.FullScreenHelper
+import com.pierfrancescosoffritti.androidyoutubeplayer.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.player.listeners.YouTubePlayerFullScreenListener
 
-class MatchDetailActivity : AppCompatActivity() {
+class MatchDetailActivity : AppCompatActivity(), View.OnClickListener {
 
 	private var player: YouTubePlayer? = null
 	private val fullScreenHelper = FullScreenHelper(this)
@@ -65,6 +68,27 @@ class MatchDetailActivity : AppCompatActivity() {
 		supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
 		initYouTubePlayerView()
+		initPlayerControls()
+	}
+
+	private fun initPlayerControls() {
+		listOf(skipForward1, skipForward2, skipForward3, skipBack1, skipBack2, skipBack3).forEach {it.setOnClickListener(this)}
+	}
+
+	override fun onClick(v: View?) {
+		when(v){
+			skipBack1 -> skip(-5)
+			skipBack2 -> skip(-60)
+			skipBack3 -> skip(-300)
+			skipForward1 -> skip(5)
+			skipForward2 -> skip(60)
+			skipForward3 -> skip(300)
+		}
+	}
+
+	private fun skip(seconds: Int){
+		val currentTime = ViewModelProviders.of(this).get(MatchDetailViewModel::class.java).playbackTime
+		player?.seekTo(currentTime + seconds)
 	}
 
 	private fun initYouTubePlayerView() {
@@ -103,12 +127,19 @@ class MatchDetailActivity : AppCompatActivity() {
 
 	class MatchDetailYoutubePlayerListener(private val context: FragmentActivity, private val player: YouTubePlayer) : AbstractYouTubePlayerListener() {
 
-		private val vod get() = ViewModelProviders.of(context).get(MatchDetailViewModel::class.java).currentVOD
+		private val viewModel get() = ViewModelProviders.of(context).get(MatchDetailViewModel::class.java)
 
 		override fun onReady() {
-			vod?.id?.let {
+			viewModel.currentVOD?.id?.let {
 				player.loadVideo(it, 0f)
 			}
+		}
+		override fun onError(error: PlayerConstants.PlayerError) {
+			Log.e("err", error.toString())
+		}
+
+		override fun onCurrentSecond(second: Float) {
+			viewModel.playbackTime = second
 		}
 	}
 
@@ -127,8 +158,8 @@ class MatchDetailActivity : AppCompatActivity() {
 
 	private fun playCurrentVOD(){
 		val vod = ViewModelProviders.of(this).get(MatchDetailViewModel::class.java).currentVOD
-		player?.apply {
-			//loadVideo(vod?.id)
+		vod?.id?.let {
+			player?.loadVideo(it, 0f)
 		}
 	}
 
