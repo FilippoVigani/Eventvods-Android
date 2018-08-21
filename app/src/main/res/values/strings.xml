@@ -97,4 +97,8 @@
 	<string name="title_event_detail">Event Detail</string>
 	<string name="title_match_detail">Match Detail</string>
 	<string name="match_game">Game</string>
+	<string name="game_start">Game start</string>
+	<string name="draft">Draft</string>
+	<string name="error_video">There was an error initializing the Youtube video player (%1$s)</string>
+	<string name="player_play">Play</string>
 </resources>

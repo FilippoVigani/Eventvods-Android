@@ -9,6 +9,7 @@ import com.filippovigani.eventvods.R
 import com.filippovigani.eventvods.databinding.ActivityEventListBinding
 import com.filippovigani.eventvods.viewmodels.EventListViewModel
 import com.filippovigani.eventvods.views.adapters.EventsAdapter
+import com.filippovigani.eventvods.views.utils.getAttribute
 import kotlinx.android.synthetic.main.activity_event_list.*
 import kotlinx.android.synthetic.main.event_list.*
 

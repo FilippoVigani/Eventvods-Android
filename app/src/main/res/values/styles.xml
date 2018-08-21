@@ -5,7 +5,7 @@
 		<item name="colorPrimaryDark">@color/primary_dark</item>
 		<item name="colorAccent">@color/accent</item>
 		<item name="colorPrimaryLight">@color/primary_light</item>
-		<!-- <item name="colorControlNormal"> controls the ‘normal’ state of components such as an unselected EditText, and unselected Checkboxes and RadioButtons</item> -->
+		<item name="colorControlNormal">?android:attr/colorPrimary</item> <!-- controls the ‘normal’ state of components such as an unselected EditText, and unselected Checkboxes and RadioButtons -->
 		<!-- <item name="colorControlActivated"> overrides colorAccent as the activated or checked state for Checkboxes and RadioButtons</item> -->
 		<!-- <item name="colorControlHighlight"> controls the ripple coloring -->
 		<item name="android:textColorPrimary">@color/primary_text</item>
@@ -24,9 +24,15 @@
 
 	<style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-	<style name="PrimaryFlatButton">
+	<style name="TextButton">
 		<item name="android:buttonStyle">
 			@style/Widget.AppCompat.Button.Borderless.Colored
+		</item>
+	</style>
+
+	<style name="ContainedButton">
+		<item name="android:buttonStyle">
+			@style/Widget.AppCompat.Button.Colored
 		</item>
 	</style>
 

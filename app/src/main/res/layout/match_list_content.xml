@@ -107,7 +107,7 @@
 					android:layout_height="wrap_content"
 					android:text="Reveal"
 					android:visibility="@{!viewModel.spoilerable || viewModel.revealed ? View.INVISIBLE : View.VISIBLE}"
-					android:theme="@style/PrimaryFlatButton"
+					android:theme="@style/TextButton"
 					/>
 			</LinearLayout>
 		</LinearLayout>

@@ -15,7 +15,7 @@ object RecyclerViewBindingAdapters {
 		}
 	}
 
-	@JvmStatic @BindingAdapter("fixedSize")
+	@JvmStatic @BindingAdapter("fixedSize") //TODO: check if hasFixedSize already exists as an adapter
 	fun setFixedSize(recyclerVew: RecyclerView, fixedSize: Boolean) {
 		recyclerVew.setHasFixedSize(fixedSize)
 	}

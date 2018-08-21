@@ -1,4 +1,4 @@
-package com.filippovigani.eventvods.views
+package com.filippovigani.eventvods.views.utils
 
 import android.content.res.Resources
 import android.util.TypedValue

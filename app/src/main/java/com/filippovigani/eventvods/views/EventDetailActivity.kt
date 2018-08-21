@@ -4,25 +4,21 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.provider.SyncStateContract
 import android.support.design.widget.Snackbar
 import android.support.design.widget.TabLayout
-import android.support.v4.app.FragmentActivity
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import com.filippovigani.eventvods.R
 import com.filippovigani.eventvods.databinding.ActivityEventDetailBinding
 import com.filippovigani.eventvods.viewmodels.EventDetailViewModel
 import com.filippovigani.eventvods.views.adapters.EventSectionsPagerAdapter
+import com.filippovigani.eventvods.views.utils.ThemeUtils
+import com.filippovigani.eventvods.views.utils.getAttribute
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_event_detail.*
 import kotlinx.android.synthetic.main.activity_event_detail.view.*
-import com.google.android.youtube.player.internal.e
-import com.google.android.youtube.player.YouTubeInitializationResult
-import com.google.android.youtube.player.YouTubePlayer
-import com.google.android.youtube.player.YouTubePlayerSupportFragment
 
 
 /**
@@ -84,6 +80,12 @@ class EventDetailActivity : AppCompatActivity(){
 			override fun onPageSelected(position: Int) {
 			}
 		})
+	}
+
+	override fun onCreateOptionsMenu(menu: Menu): Boolean {
+		val inflater = menuInflater
+		inflater.inflate(R.menu.menu_main, menu)
+		return true
 	}
 
 	override fun onOptionsItemSelected(item: MenuItem) =

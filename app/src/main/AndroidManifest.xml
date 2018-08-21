@@ -34,6 +34,7 @@
 		<activity android:name=".views.MatchDetailActivity"
 			android:label="@string/title_match_detail"
 			android:parentActivityName=".views.EventDetailActivity"
+			android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
 			>
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
