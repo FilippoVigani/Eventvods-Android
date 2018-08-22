@@ -55,17 +55,20 @@ class MatchDetailViewModel(matchId : String) : ViewModel(){
 		}
 	}
 
+
+	fun skip(seconds: Int) = player?.skip(seconds)
+	fun togglePlayback() = player?.togglePlayback()
+
 	fun YouTubePlayer.loadCurrentVOD(){
 		val id = Match.Game.VOD.id(currentVODUrl)
 		val start = Match.Game.VOD.startSeconds(currentVODUrl)
 		if (id == playerTracker.videoId){
 			this.seekTo(start.toFloat())
 		} else {
-			this.loadVideo(id ?: "", start.toFloat())
+			if (id != null)
+				this.loadVideo(id, start.toFloat())
 		}
 	}
-	fun skip(seconds: Int) = player?.skip(seconds)
-	fun togglePlayback() = player?.togglePlayback()
 
 	fun YouTubePlayer.skip(seconds: Int){
 		this.seekTo(playerTracker.currentSecond + seconds)
