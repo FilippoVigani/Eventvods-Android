@@ -12,24 +12,17 @@ import android.databinding.BindingMethods
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.TabLayout
-import android.support.v4.app.FragmentActivity
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import com.filippovigani.eventvods.R
 import com.filippovigani.eventvods.databinding.ActivityMatchDetailBinding
 import com.filippovigani.eventvods.viewmodels.MatchDetailViewModel
-import com.filippovigani.eventvods.viewmodels.MatchDetailViewModel.*
 import com.filippovigani.eventvods.views.adapters.MatchGamePagerAdapter
 import com.filippovigani.eventvods.views.utils.FullScreenHelper
 import com.filippovigani.eventvods.views.utils.ThemeUtils
-import com.pierfrancescosoffritti.androidyoutubeplayer.player.PlayerConstants
-import com.pierfrancescosoffritti.androidyoutubeplayer.player.YouTubePlayer
-import com.pierfrancescosoffritti.androidyoutubeplayer.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.player.listeners.YouTubePlayerFullScreenListener
-import com.pierfrancescosoffritti.androidyoutubeplayer.utils.YouTubePlayerTracker
 import kotlinx.android.synthetic.main.activity_match_detail.*
 import kotlinx.android.synthetic.main.activity_match_detail.view.*
 import kotlinx.android.synthetic.main.match_game.*
@@ -77,7 +70,7 @@ class MatchDetailActivity : AppCompatActivity(), View.OnClickListener {
 	}
 
 	private fun initPlayerControls() {
-		listOf(togglePlaybackButton, skipForward1, skipForward2, skipForward3, skipBack1, skipBack2, skipBack3, gameStart, gameDraft, gameHighlights).forEach {it.setOnClickListener(this)}
+		listOf(togglePlaybackButton, skipForward1, skipForward2, skipForward3, skipBack1, skipBack2, skipBack3).forEach {it.setOnClickListener(this)}
 	}
 
 	override fun onClick(v: View?) {
@@ -90,8 +83,10 @@ class MatchDetailActivity : AppCompatActivity(), View.OnClickListener {
 			skipForward1 -> vm.skip(5)
 			skipForward2 -> vm.skip(60)
 			skipForward3 -> vm.skip(300)
+			gameStart, gameDraft -> vm.currentVODUrl = v?.tag as? String
 		}
 	}
+
 	private fun initYouTubePlayerView() {
 		lifecycle.addObserver(youtubePlayerView)
 

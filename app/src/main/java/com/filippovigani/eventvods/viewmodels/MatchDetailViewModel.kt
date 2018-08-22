@@ -5,6 +5,7 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.databinding.ObservableBoolean
+import android.util.Log
 import com.filippovigani.eventvods.models.Match
 import com.filippovigani.eventvods.services.EventvodsRepository
 import com.pierfrancescosoffritti.androidyoutubeplayer.player.PlayerConstants
@@ -47,12 +48,21 @@ class MatchDetailViewModel(matchId : String) : ViewModel(){
 				else -> { }
 			}
 		}
+
+		override fun onError(error: PlayerConstants.PlayerError) {
+			super.onError(error)
+			Log.e("YoutubePlayer", error.toString())
+		}
 	}
 
 	fun YouTubePlayer.loadCurrentVOD(){
 		val id = Match.Game.VOD.id(currentVODUrl)
 		val start = Match.Game.VOD.startSeconds(currentVODUrl)
-		this.loadVideo(id ?: "", start.toFloat())
+		if (id == playerTracker.videoId){
+			this.seekTo(start.toFloat())
+		} else {
+			this.loadVideo(id ?: "", start.toFloat())
+		}
 	}
 	fun skip(seconds: Int) = player?.skip(seconds)
 	fun togglePlayback() = player?.togglePlayback()

@@ -12,8 +12,10 @@ import com.filippovigani.eventvods.R
 import com.filippovigani.eventvods.databinding.MatchGameBinding
 import com.filippovigani.eventvods.viewmodels.MatchDetailViewModel
 import com.filippovigani.eventvods.viewmodels.MatchGameViewModel
+import kotlinx.android.synthetic.main.match_game.*
+import kotlinx.android.synthetic.main.match_game.view.*
 
-class MatchGameFragment : Fragment() {
+class MatchGameFragment : Fragment(), View.OnClickListener {
 	private var gameIndex: Int = 0
 
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +37,23 @@ class MatchGameFragment : Fragment() {
 			})
 		}
 
+		initPlayerControls(binding.root)
 		return binding.root
+	}
+
+	private fun initPlayerControls(root: View?) {
+		listOf(root?.gameStart, root?.gameDraft, root?.gameHighlights).forEach {it?.setOnClickListener(this)}
+	}
+
+	override fun onClick(v: View?) {
+		activity?.let {
+			val vm =  ViewModelProviders.of(it).get(MatchDetailViewModel::class.java)
+			val game = ViewModelProviders.of(this).get(MatchGameViewModel::class.java).game
+			when(v){
+				gameStart -> vm.currentVODUrl = game.youtube?.gameStart
+				gameDraft -> vm.currentVODUrl = game.youtube?.draft
+			}
+		}
 	}
 
 	companion object {
