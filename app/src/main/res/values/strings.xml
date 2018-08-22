@@ -107,4 +107,5 @@
 	<string name="skip_back_5_seconds">Skip back 5 seconds</string>
 	<string name="skip_back_1_minute">Skip back 1 minute</string>
 	<string name="skip_back_5_minutes">Skip back 5 minutes</string>
+	<string name="highlights">Highlights</string>
 </resources>

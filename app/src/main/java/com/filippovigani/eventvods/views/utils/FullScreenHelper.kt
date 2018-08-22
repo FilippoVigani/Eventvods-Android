@@ -1,6 +1,7 @@
 package com.filippovigani.eventvods.views.utils
 
 import android.app.Activity
+import android.support.transition.TransitionManager
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.View.*
@@ -48,7 +49,9 @@ class FullScreenHelper/**
 	var systemUiVisibility = SYSTEM_UI_FLAG_LAYOUT_STABLE
 
 	private fun hideSystemUI(mDecorView:View) {
-		val container = context.findViewById<ViewGroup>(android.R.id.content).getChildAt(0)
+		val viewGroup = context.findViewById<ViewGroup>(android.R.id.content)
+		val container = viewGroup.getChildAt(0)
+
 		fitsSystemWindows = container?.fitsSystemWindows ?: true
 		container?.fitsSystemWindows = false
 		systemUiVisibility = mDecorView.systemUiVisibility

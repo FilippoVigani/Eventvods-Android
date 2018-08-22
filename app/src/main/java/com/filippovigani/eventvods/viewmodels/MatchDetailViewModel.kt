@@ -1,19 +1,70 @@
 package com.filippovigani.eventvods.viewmodels
 
 import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.databinding.ObservableBoolean
 import com.filippovigani.eventvods.models.Match
 import com.filippovigani.eventvods.services.EventvodsRepository
+import com.pierfrancescosoffritti.androidyoutubeplayer.player.PlayerConstants
+import com.pierfrancescosoffritti.androidyoutubeplayer.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.player.listeners.AbstractYouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.utils.YouTubePlayerTracker
 
 class MatchDetailViewModel(matchId : String) : ViewModel(){
 
 	val match: LiveData<Match> = EventvodsRepository.getMatch(matchId)
 
-	var currentVOD: Match.Game.VOD? = null
-	var playbackTime: Float = 0f
+	var currentVODUrl : String? = null
+		set(value){
+			field = value
+			player?.loadCurrentVOD()
+		}
 	val isPlaying: ObservableBoolean = ObservableBoolean(false)
+
+	var player : YouTubePlayer? = null
+		set(value){
+			if (field != value){
+				field = value
+				field?.addListener(playerTracker)
+			}
+		}
+
+	private val playerTracker = object : YouTubePlayerTracker(){
+
+		override fun onReady() {
+			super.onReady()
+			player?.loadCurrentVOD()
+		}
+
+		override fun onStateChange(state: PlayerConstants.PlayerState) {
+			super.onStateChange(state)
+			when(state){
+				PlayerConstants.PlayerState.PLAYING -> isPlaying.set(true)
+				PlayerConstants.PlayerState.PAUSED -> isPlaying.set(false)
+				PlayerConstants.PlayerState.ENDED -> isPlaying.set(false)
+				else -> { }
+			}
+		}
+	}
+
+	fun YouTubePlayer.loadCurrentVOD(){
+		val id = Match.Game.VOD.id(currentVODUrl)
+		val start = Match.Game.VOD.startSeconds(currentVODUrl)
+		this.loadVideo(id ?: "", start.toFloat())
+	}
+	fun skip(seconds: Int) = player?.skip(seconds)
+	fun togglePlayback() = player?.togglePlayback()
+
+	fun YouTubePlayer.skip(seconds: Int){
+		this.seekTo(playerTracker.currentSecond + seconds)
+	}
+
+	fun YouTubePlayer.togglePlayback(){
+		if (isPlaying.get()) player?.pause()
+		else this.play()
+	}
 
 	class Factory(private val matchId: String) : ViewModelProvider.NewInstanceFactory() {
 

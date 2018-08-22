@@ -29,11 +29,20 @@ data class Match(@SerializedName("_id") val id: String ) {
 
 		class VOD{
 			val gameStart: String? = null
-			val picksBans: String? = null
+			@SerializedName("picksBans")
+			val draft: String? = null
 
 
-			val id: String?
-				get() = UrlQuerySanitizer(gameStart).getValue("v")
+			companion object {
+				fun id(url: String?): String? = url?.let { UrlQuerySanitizer(it).getValue("v") }
+
+				fun startSeconds(url: String?) : Int {
+					val time = url?.let { UrlQuerySanitizer(it).getValue("t") } ?: return 0
+					val matches = Regex("(?:([0-9]+)(?:m))?(?:([0-9]+)(?:s))?").matchEntire(time)
+
+					return (matches?.groups?.get(1)?.value?.toIntOrNull() ?: 0) * 60 + (matches?.groups?.get(2)?.value?.toIntOrNull() ?: 0)
+				}
+			}
 		}
 	}
 }

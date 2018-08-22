@@ -21,6 +21,7 @@ import android.widget.ImageView
 import com.filippovigani.eventvods.R
 import com.filippovigani.eventvods.databinding.ActivityMatchDetailBinding
 import com.filippovigani.eventvods.viewmodels.MatchDetailViewModel
+import com.filippovigani.eventvods.viewmodels.MatchDetailViewModel.*
 import com.filippovigani.eventvods.views.adapters.MatchGamePagerAdapter
 import com.filippovigani.eventvods.views.utils.FullScreenHelper
 import com.filippovigani.eventvods.views.utils.ThemeUtils
@@ -28,8 +29,11 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.player.listeners.YouTubePlayerFullScreenListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.utils.YouTubePlayerTracker
 import kotlinx.android.synthetic.main.activity_match_detail.*
 import kotlinx.android.synthetic.main.activity_match_detail.view.*
+import kotlinx.android.synthetic.main.match_game.*
+import kotlinx.android.synthetic.main.player_controls.*
 
 @BindingMethods(
 		BindingMethod(
@@ -39,8 +43,6 @@ import kotlinx.android.synthetic.main.activity_match_detail.view.*
 		)
 )
 class MatchDetailActivity : AppCompatActivity(), View.OnClickListener {
-
-	private var player: YouTubePlayer? = null
 	private val fullScreenHelper = FullScreenHelper(this)
 
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,20 +53,17 @@ class MatchDetailActivity : AppCompatActivity(), View.OnClickListener {
 		setTheme(ThemeUtils.getGameTheme(gameSlug))
 
 		val binding: ActivityMatchDetailBinding = DataBindingUtil.setContentView(this, R.layout.activity_match_detail)
-		//menuInflater.inflate(R.menu.menu_main, binding.root.player_menu.menu)
 		binding.setLifecycleOwner(this)
 		matchId?.let { binding.viewModel = ViewModelProviders.of(this, MatchDetailViewModel.Factory(it)).get(MatchDetailViewModel::class.java) }
 
 		val sectionsPagerAdapter = MatchGamePagerAdapter(supportFragmentManager)
 		binding.root.gamesViewPager.adapter = sectionsPagerAdapter
 
-		//val playerFragment = youtubePlayerFragment as? YouTubePlayerSupportFragment ?: return
-		//playerFragment.initialize(BuildConfig.YoutubeAPIKey, this)
-
 		binding.viewModel?.match?.observe(this, Observer { match ->
 			sectionsPagerAdapter.games = match?.games
-			binding.viewModel?.currentVOD = match?.games?.get(0)?.youtube
-			playCurrentVOD()
+			if (binding.viewModel?.currentVODUrl == null){
+				binding.viewModel?.currentVODUrl = match?.games?.get(0)?.youtube?.draft
+			}
 			if (match?.games != null && match.games.size <= 5) {
 				binding.root.gamesTabLayout.tabMode = TabLayout.MODE_FIXED
 			}
@@ -78,32 +77,21 @@ class MatchDetailActivity : AppCompatActivity(), View.OnClickListener {
 	}
 
 	private fun initPlayerControls() {
-		listOf(togglePlaybackButton, skipForward1, skipForward2, skipForward3, skipBack1, skipBack2, skipBack3).forEach {it.setOnClickListener(this)}
+		listOf(togglePlaybackButton, skipForward1, skipForward2, skipForward3, skipBack1, skipBack2, skipBack3, gameStart, gameDraft, gameHighlights).forEach {it.setOnClickListener(this)}
 	}
 
 	override fun onClick(v: View?) {
+		val vm =  ViewModelProviders.of(this@MatchDetailActivity).get(MatchDetailViewModel::class.java)
 		when(v){
-			togglePlaybackButton -> togglePlayback()
-			skipBack1 -> skip(-5)
-			skipBack2 -> skip(-60)
-			skipBack3 -> skip(-300)
-			skipForward1 -> skip(5)
-			skipForward2 -> skip(60)
-			skipForward3 -> skip(300)
+			togglePlaybackButton -> vm.togglePlayback()
+			skipBack1 -> vm.skip(-5)
+			skipBack2 -> vm.skip(-60)
+			skipBack3 -> vm.skip(-300)
+			skipForward1 -> vm.skip(5)
+			skipForward2 -> vm.skip(60)
+			skipForward3 -> vm.skip(300)
 		}
 	}
-
-	private fun skip(seconds: Int){
-		val currentTime = ViewModelProviders.of(this).get(MatchDetailViewModel::class.java).playbackTime
-		player?.seekTo(currentTime + seconds)
-	}
-
-	private fun togglePlayback(){
-		val isPlaying = ViewModelProviders.of(this).get(MatchDetailViewModel::class.java).isPlaying.get()
-		if (isPlaying) player?.pause()
-		else player?.play()
-	}
-
 	private fun initYouTubePlayerView() {
 		lifecycle.addObserver(youtubePlayerView)
 
@@ -116,13 +104,7 @@ class MatchDetailActivity : AppCompatActivity(), View.OnClickListener {
 			showFullscreenButton(true)
 		}
 
-		youtubePlayerView.initialize({ youTubePlayer ->
-
-			this@MatchDetailActivity.player = youTubePlayer.apply {
-				addListener(MatchDetailYoutubePlayerListener(this@MatchDetailActivity, this))
-			}
-
-		}, true)
+		youtubePlayerView.initialize({ ViewModelProviders.of(this@MatchDetailActivity).get(MatchDetailViewModel::class.java).player = it }, true)
 
 		youtubePlayerView.addFullScreenListener(object : YouTubePlayerFullScreenListener {
 			override fun onYouTubePlayerEnterFullScreen() {
@@ -137,32 +119,6 @@ class MatchDetailActivity : AppCompatActivity(), View.OnClickListener {
 		})
 	}
 
-
-	class MatchDetailYoutubePlayerListener(private val context: FragmentActivity, private val player: YouTubePlayer) : AbstractYouTubePlayerListener() {
-
-		private val viewModel get() = ViewModelProviders.of(context).get(MatchDetailViewModel::class.java)
-
-		override fun onReady() {
-			viewModel.currentVOD?.id?.let {
-				player.loadVideo(it, 0f)
-			}
-		}
-		override fun onError(error: PlayerConstants.PlayerError) {
-			Log.e("err", error.toString())
-		}
-
-		override fun onCurrentSecond(second: Float) {
-			viewModel.playbackTime = second
-		}
-
-		override fun onStateChange(state: PlayerConstants.PlayerState) {
-			when(state){
-				PlayerConstants.PlayerState.PLAYING -> viewModel.isPlaying.set(true)
-				PlayerConstants.PlayerState.PAUSED -> viewModel.isPlaying.set(false)
-			}
-		}
-	}
-
 	override fun onConfigurationChanged(newConfiguration: Configuration) {
 		super.onConfigurationChanged(newConfiguration)
 		youtubePlayerView.playerUIController.menu?.dismiss()
@@ -173,14 +129,6 @@ class MatchDetailActivity : AppCompatActivity(), View.OnClickListener {
 			youtubePlayerView.exitFullScreen()
 		else
 			super.onBackPressed()
-	}
-
-
-	private fun playCurrentVOD(){
-		val vod = ViewModelProviders.of(this).get(MatchDetailViewModel::class.java).currentVOD
-		vod?.id?.let {
-			player?.loadVideo(it, 0f)
-		}
 	}
 
 	override fun onOptionsItemSelected(item: MenuItem) =
@@ -194,17 +142,14 @@ class MatchDetailActivity : AppCompatActivity(), View.OnClickListener {
 
 	public override fun onPause() {
 		super.onPause()
-		//player?.release()
 	}
 
 	public override fun onStop() {
 		super.onStop()
-		//player?.release()
 	}
 
 	public override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
 		super.onRestoreInstanceState(savedInstanceState)
-		player?.play()
 	}
 
 	companion object {

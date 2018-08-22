@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	tools:context=".EventContentFragment">
+	<data>
+		<variable name="viewModel" type="com.filippovigani.eventvods.viewmodels.MatchDetailViewModel" />
+	</data>
+
+	<android.support.v7.widget.Toolbar
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/player_height"
+		android:background="?android:attr/colorBackground"
+		android:elevation="8dp">
+		<ImageButton
+			android:id="@+id/skipBack3"
+			android:layout_width="@dimen/player_button_size"
+			android:layout_height="@dimen/player_button_size"
+			android:padding="@dimen/player_button_padding"
+			android:layout_gravity="center"
+			android:background="?android:attr/selectableItemBackgroundBorderless"
+			android:contentDescription="@string/skip_back_5_minutes"
+			android:scaleType="fitCenter"
+			android:adjustViewBounds="true"
+			app:srcCompat="@drawable/ic_left_3" />
+		<ImageButton
+			android:id="@+id/skipBack2"
+			android:layout_width="@dimen/player_button_size"
+			android:layout_height="@dimen/player_button_size"
+			android:padding="@dimen/player_button_padding"
+			android:layout_gravity="center"
+			android:background="?android:attr/selectableItemBackgroundBorderless"
+			android:contentDescription="@string/skip_back_1_minute"
+			android:scaleType="fitCenter"
+			android:adjustViewBounds="true"
+			app:srcCompat="@drawable/ic_left_2" />
+		<ImageButton
+			android:id="@+id/skipBack1"
+			android:layout_width="@dimen/player_button_size"
+			android:layout_height="@dimen/player_button_size"
+			android:padding="@dimen/player_button_padding"
+			android:layout_gravity="center"
+			android:background="?android:attr/selectableItemBackgroundBorderless"
+			android:contentDescription="@string/skip_back_5_seconds"
+			android:scaleType="fitCenter"
+			android:adjustViewBounds="true"
+			app:srcCompat="@drawable/ic_left" />
+		<ImageButton
+			android:id="@+id/togglePlaybackButton"
+			android:layout_width="@dimen/player_button_big_size"
+			android:layout_height="@dimen/player_button_big_size"
+			android:padding="@dimen/player_button_padding"
+			android:layout_gravity="center"
+			android:background="?android:attr/selectableItemBackgroundBorderless"
+			android:contentDescription="@string/player_play"
+			android:scaleType="fitCenter"
+			android:adjustViewBounds="true"
+			app:srcCompat="@{viewModel.isPlaying ? @drawable/ic_pause_circle_filled : @drawable/ic_play_circle_filled}" />
+		<ImageButton
+			android:id="@+id/skipForward1"
+			android:layout_width="@dimen/player_button_size"
+			android:layout_height="@dimen/player_button_size"
+			android:padding="@dimen/player_button_padding"
+			android:layout_gravity="center"
+			android:background="?android:attr/selectableItemBackgroundBorderless"
+			android:contentDescription="@string/skip_5_seconds"
+			android:scaleType="fitCenter"
+			android:adjustViewBounds="true"
+			app:srcCompat="@drawable/ic_right" />
+		<ImageButton
+			android:id="@+id/skipForward2"
+			android:layout_width="@dimen/player_button_size"
+			android:layout_height="@dimen/player_button_size"
+			android:padding="@dimen/player_button_padding"
+			android:layout_gravity="center"
+			android:background="?android:attr/selectableItemBackgroundBorderless"
+			android:contentDescription="@string/skip_1_minute"
+			android:scaleType="fitCenter"
+			android:adjustViewBounds="true"
+			app:srcCompat="@drawable/ic_right_2" />
+		<ImageButton
+			android:id="@+id/skipForward3"
+			android:layout_width="@dimen/player_button_size"
+			android:layout_height="@dimen/player_button_size"
+			android:padding="@dimen/player_button_padding"
+			android:layout_gravity="center"
+			android:background="?android:attr/selectableItemBackgroundBorderless"
+			android:contentDescription="@string/skip_5_minutes"
+			android:scaleType="fitCenter"
+			android:adjustViewBounds="true"
+			app:srcCompat="@drawable/ic_right_3" />
+	</android.support.v7.widget.Toolbar>
+</layout>

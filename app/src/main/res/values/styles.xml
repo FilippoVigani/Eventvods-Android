@@ -36,6 +36,12 @@
 		</item>
 	</style>
 
+	<style name="OutlinedButton">
+		<item name="android:buttonStyle">
+			@style/Widget.AppCompat.Button.Borderless.Colored
+		</item>
+	</style>
+
 	<style name="CollapsingToolbarLayoutExpandedTextStyle" parent="AppTheme">
 		<item name="android:textColor">@android:color/transparent</item>
 	</style>
