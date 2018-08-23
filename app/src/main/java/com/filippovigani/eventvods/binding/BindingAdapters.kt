@@ -2,6 +2,7 @@ package com.filippovigani.eventvods.binding
 
 import android.databinding.BindingAdapter
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
@@ -70,7 +71,7 @@ object BindingAdapters{
 			override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
 				imageView.setImageDrawable(placeHolderDrawable)
 				(imageView.tag as Target?)?.let {
-					imageView.setBackgroundColor(ContextCompat.getColor(imageView.context, R.color.cardview_light_background))
+					imageView.setBackgroundColor(Color.TRANSPARENT)
 					Picasso.get().cancelRequest(it)
 				}
 				imageView.tag = this
