@@ -1,6 +1,6 @@
 <resources>
 	<!-- use parent="Theme.AppCompat" for a dark theme -->
-	<style name="AppTheme" parent="Theme.AppCompat">
+	<style name="Base.AppTheme" parent="Theme.AppCompat">
 		<item name="colorPrimary">@color/primary</item>
 		<item name="colorPrimaryDark">@color/primary_dark</item>
 		<item name="colorAccent">@color/accent</item>
@@ -13,10 +13,14 @@
 		<!--<item name="controlBackground">?attr/selectableItemBackgroundBorderless</item>-->
 		<item name="android:colorBackground">@color/background</item> <!-- @color/background_material_light -->
 		<!--<item name="android:textColorPrimary">@color/abc_primary_text_material_light</item>-->
-		<!--<item name="android:textColorPrimaryInverse">@color/abc_primary_text_material_light</item>-->
+		<!--<item name="android:textColorPrimaryInverse">@color/abc_secondary_text_material_light</item>-->
 		<!--<item name="android:textColorSecondary">@color/abc_secondary_text_material_light</item>-->
 		<!--<item name="android:textColorSecondaryInverse">@color/abc_secondary_text_material_light</item>-->
 		<!--<item name="android:windowBackground">@color/background_material_light</item>-->
+	</style>
+
+	<style name="AppTheme" parent="Base.AppTheme">
+
 	</style>
 
 	<style name="EVCardView" parent="CardView.Dark">
