@@ -9,26 +9,37 @@ import com.filippovigani.eventvods.networking.Endpoint
 import com.filippovigani.eventvods.networking.HttpsRequestTask
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.rxkotlin.toObservable
+import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.PublishSubject
+import okhttp3.OkHttpClient
+import okhttp3.Request
 
 
 class EventvodsRepository {
 	companion object {
 
-		inline fun <reified T> Gson.fromJson(json: String) = this.fromJson<T>(json, object: TypeToken<T>() {}.type)
+		private inline fun <reified T> Gson.fromJson(json: String): T = this.fromJson<T>(json, object: TypeToken<T>() {}.type)
 		private val gson = Gson()
 
-		private val events : MutableLiveData<List<Event>> = MutableLiveData()
 		private val eventsMap : HashMap<String, Event> = HashMap()
 		private val matchesMap : HashMap<String, Match> = HashMap()
 
-		fun fetchEvents() : LiveData<List<Event>>{
-			//TODO: Consider using List instead of ObservableList
-			HttpsRequestTask { response ->
-				val results = gson.fromJson<List<Event>>(response)
-				results.forEach { event -> eventsMap[event.slug] = event }
-				events.postValue(results)
-			}.execute(Endpoint.EVENTS.url)
-			return events
+		val events = PublishSubject.create<List<Event>>()
+
+		private val httpClient = OkHttpClient()
+
+		fun fetchEvents(){
+			Observable.fromCallable { httpClient.newCall(Request.Builder().url(Endpoint.EVENTS.url).build()).execute() }
+				.subscribeOn(Schedulers.io())
+				.observeOn(AndroidSchedulers.mainThread())
+				.map { gson.fromJson<List<Event>>(it.body()?.string() ?: "") } //TODO: Consider using retrofit
+				.doOnNext {it.forEach { event -> eventsMap[event.slug] = event } }
+				//.subscribeBy ( onNext = {events.onNext(it)} )
+				.subscribe(events)
 		}
 
 		fun getEvent(eventSlug: String) : LiveData<Event>{
