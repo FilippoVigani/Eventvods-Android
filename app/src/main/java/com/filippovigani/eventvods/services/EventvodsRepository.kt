@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MediatorLiveData
 import android.arch.lifecycle.MutableLiveData
 import com.filippovigani.eventvods.models.Event
+import com.filippovigani.eventvods.models.Featured
 import com.filippovigani.eventvods.models.Match
 import com.filippovigani.eventvods.networking.Endpoint
 import com.filippovigani.eventvods.networking.HttpsRequestTask
@@ -24,10 +25,10 @@ class EventvodsRepository {
 		fun fetchEvents() : LiveData<List<Event>>{
 			//TODO: Consider using List instead of ObservableList
 			HttpsRequestTask { response ->
-				val results = gson.fromJson<List<Event>>(response)
-				results.forEach { event -> eventsMap[event.slug] = event }
-				events.postValue(results)
-			}.execute(Endpoint.EVENTS.url)
+				val result = gson.fromJson<Featured>(response)
+				result.events.forEach { event -> eventsMap[event.slug] = event }
+				events.postValue(result.events)
+			}.execute(Endpoint.FEATURED.url)
 			return events
 		}
 
@@ -54,7 +55,10 @@ class EventvodsRepository {
 
 		fun getMatch(matchId: String) : LiveData<Match>{
 			val match = MutableLiveData<Match>()
-			matchesMap[matchId]?.let{match.postValue(it)}
+			matchesMap[matchId]?.let{
+				match.postValue(it)
+			}
+
 			return match
 		}
 	}

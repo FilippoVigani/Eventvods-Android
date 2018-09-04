@@ -33,11 +33,16 @@ object BindingAdapters{
 
 	@JvmStatic @BindingAdapter("src")
 	fun setImageViewResource(imageView: ImageView, src: String?) {
-		if (src == null){
-			imageView.setImageDrawable(null)
-			return
+		when(src){
+			null -> imageView.setImageDrawable(null)
+			"dota" -> imageView.setImageResource(R.drawable.dota2_logo)
+			"lol" -> imageView.setImageResource(R.drawable.lol_logo)
+			"csgo" -> imageView.setImageResource(R.drawable.csgo_logo)
+			"rocket-league" -> imageView.setImageResource(R.drawable.rocketleague_logo)
+			"overwatch" -> imageView.setImageResource(R.drawable.overwatch_logo)
+			"pubg" -> imageView.setImageResource(R.drawable.pubg_logo)
+			else -> Picasso.get().load(src).into(imageView)
 		}
-		Picasso.get().load(src).into(imageView)
 	}
 
 	val palettes: HashMap<String, Palette> = HashMap()

@@ -18,6 +18,8 @@ data class Match(@SerializedName("_id") val id: String ) {
 	val team1: Team? = null
 	val team2: Team? = null
 
+	val highlightsIndex: Int = 0
+
 	@SerializedName("data")
 	val games: List<Game>? = null
 
@@ -38,9 +40,9 @@ data class Match(@SerializedName("_id") val id: String ) {
 
 				fun startSeconds(url: String?) : Int {
 					val time = url?.let { UrlQuerySanitizer(it).getValue("t") } ?: return 0
-					val matches = Regex("(?:([0-9]+)(?:m))?(?:([0-9]+)(?:s))?").matchEntire(time)
+					val matches = Regex("(?:([0-9]+)(?:h))?(?:([0-9]+)(?:m))?(?:([0-9]+)(?:s))?").matchEntire(time)
 
-					return (matches?.groups?.get(1)?.value?.toIntOrNull() ?: 0) * 60 + (matches?.groups?.get(2)?.value?.toIntOrNull() ?: 0)
+					return (matches?.groups?.get(1)?.value?.toIntOrNull() ?: 0) * 60 * 60 +(matches?.groups?.get(2)?.value?.toIntOrNull() ?: 0) * 60 + (matches?.groups?.get(3)?.value?.toIntOrNull() ?: 0)
 				}
 			}
 		}

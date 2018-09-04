@@ -83,7 +83,6 @@ class MatchDetailActivity : AppCompatActivity(), View.OnClickListener {
 			skipForward1 -> vm.skip(5)
 			skipForward2 -> vm.skip(60)
 			skipForward3 -> vm.skip(300)
-			gameStart, gameDraft -> vm.currentVODUrl = v?.tag as? String
 		}
 	}
 

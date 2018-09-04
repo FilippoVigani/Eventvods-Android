@@ -4,6 +4,7 @@ import java.net.URL
 
 enum class Endpoint(service: String) {
 	EVENTS("/events"),
+	FEATURED("/featured"),
 	GAME("/events/slug"),
 	EVENT("/events/slug"),;
 

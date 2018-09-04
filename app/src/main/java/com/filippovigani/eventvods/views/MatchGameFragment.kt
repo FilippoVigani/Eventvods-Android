@@ -48,10 +48,11 @@ class MatchGameFragment : Fragment(), View.OnClickListener {
 	override fun onClick(v: View?) {
 		activity?.let {
 			val vm =  ViewModelProviders.of(it).get(MatchDetailViewModel::class.java)
-			val game = ViewModelProviders.of(this).get(MatchGameViewModel::class.java).game
+			val gameVM = ViewModelProviders.of(this).get(MatchGameViewModel::class.java)
 			when(v){
-				gameStart -> vm.currentVODUrl = game.youtube?.gameStart
-				gameDraft -> vm.currentVODUrl = game.youtube?.draft
+				gameStart -> vm.currentVODUrl = gameVM.game.youtube?.gameStart
+				gameDraft -> vm.currentVODUrl = gameVM.game.youtube?.draft
+				gameHighlights -> vm.currentVODUrl = gameVM.highlightsUrl
 			}
 		}
 	}

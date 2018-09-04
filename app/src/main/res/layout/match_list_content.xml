@@ -41,7 +41,7 @@
 						android:contentDescription="@{viewModel.match.team1.name}"
 						android:padding="16dp"
 						android:scaleType="fitCenter"
-						app:src="@{viewModel.revealed || !viewModel.match.spoiler1 ? viewModel.match.team1.icon : null}" />
+						app:src="@{viewModel.revealed || !viewModel.match.spoiler1 ? viewModel.match.team1.icon : viewModel.event.game.slug}" />
 
 					<TextView
 						android:layout_width="wrap_content"
@@ -63,7 +63,7 @@
 						android:contentDescription="@{viewModel.match.team2.name}"
 						android:padding="16dp"
 						android:scaleType="fitCenter"
-						app:src="@{viewModel.revealed || !viewModel.match.spoiler2 ? viewModel.match.team2.icon : null}" />
+						app:src="@{viewModel.revealed || !viewModel.match.spoiler2 ? viewModel.match.team2.icon : viewModel.event.game.slug}" />
 				</TableRow>
 				<TableRow
 					android:layout_width="match_parent"

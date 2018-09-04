@@ -7,11 +7,15 @@ import android.arch.lifecycle.ViewModelProvider
 import android.databinding.ObservableBoolean
 import android.util.Log
 import com.filippovigani.eventvods.models.Match
+import com.filippovigani.eventvods.networking.HttpUtils.Companion.resolveUrl
 import com.filippovigani.eventvods.services.EventvodsRepository
 import com.pierfrancescosoffritti.androidyoutubeplayer.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.utils.YouTubePlayerTracker
+import java.net.HttpURLConnection
+import java.net.URL
+import kotlin.concurrent.thread
 
 class MatchDetailViewModel(matchId : String) : ViewModel(){
 
@@ -60,13 +64,16 @@ class MatchDetailViewModel(matchId : String) : ViewModel(){
 	fun togglePlayback() = player?.togglePlayback()
 
 	fun YouTubePlayer.loadCurrentVOD(){
-		val id = Match.Game.VOD.id(currentVODUrl)
-		val start = Match.Game.VOD.startSeconds(currentVODUrl)
-		if (id == playerTracker.videoId){
-			this.seekTo(start.toFloat())
-		} else {
-			if (id != null)
-				this.loadVideo(id, start.toFloat())
+		thread {
+			val url =  if (currentVODUrl?.contains("youtube") == true) currentVODUrl else resolveUrl(currentVODUrl)
+			val id = Match.Game.VOD.id(url)
+			val start = Match.Game.VOD.startSeconds(url)
+			if (id == playerTracker.videoId){
+				this.seekTo(start.toFloat())
+			} else {
+				if (id != null)
+					this.loadVideo(id, start.toFloat())
+			}
 		}
 	}
 
