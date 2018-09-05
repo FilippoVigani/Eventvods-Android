@@ -7,7 +7,10 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.design.widget.TabLayout
 import android.support.v4.view.ViewPager
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.util.EventLog
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import com.filippovigani.eventvods.R
@@ -19,6 +22,8 @@ import com.filippovigani.eventvods.views.utils.getAttribute
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_event_detail.*
 import kotlinx.android.synthetic.main.activity_event_detail.view.*
+import android.widget.FrameLayout
+import com.filippovigani.eventvods.databinding.EventInfoBinding
 
 
 /**
@@ -83,8 +88,7 @@ class EventDetailActivity : AppCompatActivity(){
 	}
 
 	override fun onCreateOptionsMenu(menu: Menu): Boolean {
-		val inflater = menuInflater
-		inflater.inflate(R.menu.menu_main, menu)
+		//menuInflater.inflate(R.menu.menu_event_detail, menu)
 		return true
 	}
 
@@ -92,6 +96,18 @@ class EventDetailActivity : AppCompatActivity(){
 		when (item.itemId) {
 			android.R.id.home -> {
 				finishAfterTransition()
+				true
+			}
+			R.id.action_event_info -> {
+				val binding: EventInfoBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.event_info, null, false)
+				binding.setLifecycleOwner(this)
+				binding.viewModel = ViewModelProviders.of(this).get(EventDetailViewModel::class.java)
+
+				val builder = AlertDialog.Builder(this)
+				builder.setView(binding.root)
+
+				val dialog = builder.create()
+				dialog.show()
 				true
 			}
 			else -> super.onOptionsItemSelected(item)
