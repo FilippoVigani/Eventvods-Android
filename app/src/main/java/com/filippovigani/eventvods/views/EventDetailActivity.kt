@@ -60,11 +60,6 @@ class EventDetailActivity : AppCompatActivity(){
 
 		setSupportActionBar(detail_toolbar)
 
-		fab.setOnClickListener { view ->
-			Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
-					.setAction("Action", null).show()
-		}
-
 		supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
 		event_image.setBackgroundColor(bgColor)

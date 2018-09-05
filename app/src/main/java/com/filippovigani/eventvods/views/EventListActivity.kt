@@ -22,7 +22,7 @@ class EventListActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListe
 		binding.setLifecycleOwner(this)
 		binding.viewModel = ViewModelProviders.of(this).get(EventListViewModel::class.java)
 
-		toolbar.title = title
+		toolbar.title = resources.getString(R.string.title_event_list)
 		setSupportActionBar(toolbar)
 
 		event_list.adapter = EventsAdapter(this)
